@@ -67,7 +67,8 @@ ainult põhikomplekti. Kaared kasutavad `flows.csv`, aasta `year` järgi.
   klikitavad, vooluandmete pop-up)
 - [x] 5 ajaliugur (aastad leitakse CSV-dest ise, ▶ esitus; prognoosiaasta = `is_forecast` true:
   silt "PROGNOOS", punktiirkaared, legendis "(prognoos)")
-- [ ] 6 lüliti elusad / kunstpuud / mõlemad
+- [x] 6 lüliti mõlemad / elusad / kunstpuud (muudab riigivärve, legendit ja kaari; materjalivood
+  kuuluvad "kunstpuude" alla; värviskaala maksimum on iga režiimi kohta kõigi aastate peale)
 - [ ] places.csv (farmid, tehased), facts.csv, uued countries-veerud pop-up'is
 
 ## Failid

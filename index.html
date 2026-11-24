@@ -16,8 +16,14 @@
 
   <div id="status">Laen andmeid…</div>
 
+  <div id="modebar" role="group" aria-label="Puude tüüp" hidden>
+    <button type="button" data-mode="both" aria-pressed="true">Mõlemad</button>
+    <button type="button" data-mode="live" aria-pressed="false">Elusad</button>
+    <button type="button" data-mode="artificial" aria-pressed="false">Kunstpuud</button>
+  </div>
+
   <aside id="legend" hidden>
-    <div class="legend-title">Jõulupuid kokku, <span id="legend-year"></span></div>
+    <div class="legend-title"><span id="legend-label">Jõulupuid kokku</span>, <span id="legend-year"></span></div>
     <div class="legend-bar"></div>
     <div class="legend-scale"><span id="legend-min">0</span><span id="legend-max"></span></div>
     <div class="legend-nodata"><i></i> andmed puuduvad</div>

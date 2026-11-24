@@ -8,6 +8,15 @@ const PLAY_MS = 1800;              // mitu ms ühe aasta kohta esituses
 const ARC_COLORS = { live: '#6df08a', artificial: '#ff5a5a', material: '#f3c969' };
 const TYPE_NAMES = { live: 'Elusad puud', artificial: 'Kunstpuud', material: 'Materjal' };
 
+// Lüliti: milliseid puid näidata. Materjalivood kuuluvad kunstpuude alla (nende tootmise sisend).
+const MODE_LABELS = { both: 'Jõulupuid kokku', live: 'Elusaid puid', artificial: 'Kunstpuid' };
+const MODE_UNITS = { both: 'puud kokku', live: 'elusat puud', artificial: 'kunstpuud' };
+const MODE_FLOW_TYPES = {
+  both: ['live', 'artificial', 'material'],
+  live: ['live'],
+  artificial: ['artificial', 'material'],
+};
+
 const $ = (id) => document.getElementById(id);
 
 // --- Abifunktsioonid ---------------------------------------------------
@@ -174,8 +183,12 @@ async function init() {
     return;
   }
   // Riigi koguarvude suurim väärtus kõigi aastate peale, et värvid oleksid aastate vahel võrreldavad
-  const allTotals = Object.values(byYear).flatMap((o) => Object.values(o)).map((r) => r.total).filter((t) => t !== null);
-  const maxTotal = Math.max(...allTotals, 1);
+  const allRows = Object.values(byYear).flatMap((o) => Object.values(o));
+  const valueFor = (r, m) => (!r ? null : m === 'live' ? r.live : m === 'artificial' ? r.art : r.total);
+  const maxByMode = {};
+  for (const m of Object.keys(MODE_LABELS)) {
+    maxByMode[m] = Math.max(...allRows.map((r) => valueFor(r, m)).filter((t) => t !== null), 1);
+  }
 
   const features = geo.features.filter((f) => f.properties.ADM0_A3 !== 'ATA');
   const featureByIso = Object.fromEntries(features.map((f) => [f.properties.ADM0_A3, f]));
@@ -186,6 +199,7 @@ async function init() {
 
   // Olek
   let year = years.find((y) => !forecastYears.has(y)) ?? years[0];
+  let mode = 'both';
   let hovered = null;
   let selected = null;
   let selectedFlow = null;
@@ -201,7 +215,7 @@ async function init() {
     .polygonsData(features)
     .polygonCapColor((f) => (f === hovered || f === selected)
       ? '#f3d98b'
-      : colorFor(rowOf(f)?.total ?? null, maxTotal))
+      : colorFor(valueFor(rowOf(f), mode), maxByMode[mode]))
     .polygonSideColor(() => 'rgba(10, 30, 60, 0.6)')
     .polygonStrokeColor(() => '#0a1d3d')
     .polygonAltitude((f) => (f === hovered || f === selected ? 0.04 : 0.012))
@@ -209,7 +223,8 @@ async function init() {
     .polygonLabel((f) => {
       const r = rowOf(f);
       const name = (r && r.country_et) || nameOfIso(f.properties.ADM0_A3);
-      const total = r && r.total !== null ? fmt(r.total) + ' puud kokku' : MISSING;
+      const v = valueFor(r, mode);
+      const total = v !== null ? `${fmt(v)} ${MODE_UNITS[mode]}` : MISSING;
       return `<div class="tip"><b>${esc(name)}</b><br>${total}</div>`;
     })
     .onPolygonHover((f) => {
@@ -329,8 +344,17 @@ async function init() {
     $('time-range').value = years.indexOf(y);
     $('legend-year').textContent = forecast ? `${y} (prognoos)` : y;
 
-    // Kaared selle aasta kohta; need, mille otspunkti asukohta ei leia, jätame välja
-    const arcs = (flowsByYear[y] || [])
+    renderArcs();
+    renderCountryPopup();
+    refresh();
+  }
+
+  // Kaared valitud aasta ja lüliti järgi; need, mille otspunkti asukohta ei leia, jätame välja
+  function renderArcs() {
+    const forecast = forecastYears.has(year);
+    const types = MODE_FLOW_TYPES[mode];
+    const arcs = (flowsByYear[year] || [])
+      .filter((f) => types.includes(f.type))
       .filter((f) => {
         const ok = centers[f.from] && centers[f.to];
         if (!ok) console.warn('Voo riigikoodi ei leitud kaardilt:', f.from, f.to);
@@ -346,16 +370,31 @@ async function init() {
          .arcStartLat('startLat').arcStartLng('startLng')
          .arcEndLat('endLat').arcEndLng('endLng');
 
-    // Avatud voo pop-up: leia sama vool uuel aastal või sulge
+    // Avatud voo pop-up: leia sama vool uuesti või sulge
     if (selectedFlow) {
       const s = selectedFlow;
       selectedFlow = arcs.find((a) => a.from === s.from && a.to === s.to && a.type === s.type
         && a.material === s.material) || null;
       if (selectedFlow) renderFlowPopup(); else closeFlow();
     }
-    renderCountryPopup();
+  }
+
+  // --- Lüliti: elusad / kunstpuud / mõlemad ---
+  function setMode(m) {
+    mode = m;
+    for (const b of $('modebar').querySelectorAll('button')) {
+      b.setAttribute('aria-pressed', String(b.dataset.mode === m));
+    }
+    $('legend-label').textContent = MODE_LABELS[m];
+    $('legend-max').textContent = fmt(maxByMode[m]);
+    renderArcs();
     refresh();
   }
+  $('modebar').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-mode]');
+    if (b) setMode(b.dataset.mode);
+  });
+  $('modebar').hidden = false;
 
   // --- Ajaliugur ---
   const range = $('time-range');
@@ -390,10 +429,10 @@ async function init() {
   $('timebar').hidden = years.length < 2;
 
   // --- Legend ja esimene joonistus ---
-  $('legend-max').textContent = fmt(maxTotal);
   $('legend').hidden = false;
   $('testbadge').hidden = !usesTestData;
   setYear(year);
+  setMode(mode);
 }
 
 init();
