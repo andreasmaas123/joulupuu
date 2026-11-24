@@ -6,8 +6,14 @@
   --green: #7bd88f;
   --gold: #e9c46a;
   --card: rgba(10, 20, 40, 0.88);
-  --line: rgba(123, 216, 143, 0.25);
+  --line: rgba(233, 196, 106, 0.28);
+  --red: #b3262b;
+  --parchment: #e8d6a8;
+  --ink: #3b2a14;
+  --serif: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
+
+h1, h2, h3 { font-family: var(--serif); }
 
 * { box-sizing: border-box; }
 
@@ -38,21 +44,133 @@ body::before {
 }
 
 #globe { position: fixed; inset: 0; }
+#snow { position: fixed; inset: 0; pointer-events: none; }
 
 #title {
   position: fixed;
-  top: 20px;
+  top: 18px;
   left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   pointer-events: none;
 }
+#title .tree { width: 34px; height: 42px; filter: drop-shadow(0 0 6px rgba(233, 196, 106, 0.45)); }
 #title h1 {
   margin: 0;
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--gold);
+  text-shadow: 0 0 14px rgba(233, 196, 106, 0.35);
 }
-#title p { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
+#title p { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; font-style: italic; }
+
+/* Pergamentmenüü (üleval paremal) */
+#nav {
+  position: fixed;
+  top: 20px;
+  right: 34px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2px 6px;
+  max-width: calc(100vw - 420px);
+  padding: 8px 26px;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.35), transparent 60%),
+    linear-gradient(180deg, #efdfb8 0%, #dcc48f 100%);
+  border-radius: 3px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55), inset 0 0 22px rgba(120, 80, 20, 0.4);
+}
+#nav::before, #nav::after {
+  content: "";
+  position: absolute;
+  top: -4px; bottom: -4px;
+  width: 14px;
+  background: linear-gradient(90deg, #1b1209, #5a4220 45%, #1b1209);
+  border-radius: 7px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+#nav::before { left: -9px; }
+#nav::after { right: -9px; }
+#nav a {
+  padding: 4px 12px;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+#nav a:hover { color: var(--red); }
+#nav a[aria-current="page"] {
+  color: var(--red);
+  font-weight: 700;
+  border-bottom-color: #b8860b;
+}
+#nav a:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+
+/* Lühitutvustuse kaart (sisu/*.html) */
+#info-card {
+  position: fixed;
+  top: 92px;
+  left: 24px;
+  width: 300px;
+  padding: 14px 18px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  line-height: 1.45;
+  font-size: 0.92rem;
+}
+#info-card[hidden] { display: none; }
+#info-card h2 { margin: 0 24px 6px 0; font-size: 1.15rem; color: var(--gold); }
+#info-card p { margin: 0; color: var(--text); }
+#info-close {
+  position: absolute; top: 6px; right: 8px;
+  width: 26px; height: 26px;
+  border: 0; border-radius: 50%;
+  background: transparent; color: var(--muted);
+  font-size: 1.2rem; line-height: 1; cursor: pointer;
+}
+#info-close:hover { color: var(--text); }
+
+/* Meist-leht */
+#page-meist {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  overflow-y: auto;
+  padding: 110px 20px 40px;
+  background: radial-gradient(ellipse at 50% 20%, rgba(10, 23, 54, 0.96), rgba(5, 11, 26, 0.98));
+}
+#page-meist[hidden] { display: none; }
+.page-card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 40px;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.35), transparent 60%),
+    linear-gradient(180deg, #efdfb8, #dcc48f);
+  color: var(--ink);
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(120, 80, 20, 0.35);
+  font-family: var(--serif);
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+.page-card h2 { margin-top: 0; font-size: 1.9rem; color: var(--red); }
+.page-card h3 { margin-top: 1.6em; color: #5a3a12; }
+.page-card img { max-width: 100%; border-radius: 4px; }
+.page-card a { color: var(--red); }
+/* Meist-lehel peidame gloobuse juhtelemendid */
+body.on-meist #legend, body.on-meist #timebar, body.on-meist #info-card,
+body.on-meist #popup, body.on-meist #flow-popup, body.on-meist #place-popup { display: none; }
+#nav { z-index: 10; }
+#title { z-index: 10; }
 
 #status {
   position: fixed;
@@ -180,35 +298,7 @@ body::before {
 .arc.material { background: #f3c969; }
 .legend-note { font-size: 0.75rem; margin-top: 2px; }
 
-/* Tüübi lüliti */
-#controls {
-  position: fixed;
-  top: 20px;
-  right: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-#controls[hidden], .legend-arcs[hidden] { display: none; }
-.legend-arcs div[hidden] { display: none; }
-.chain-btn {
-  padding: 10px 18px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--card);
-  color: var(--muted);
-  font: inherit;
-  font-size: 0.9rem;
-  cursor: pointer;
-  backdrop-filter: blur(6px);
-}
-.chain-btn:hover { color: var(--text); }
-.chain-btn[aria-pressed="true"] {
-  background: rgba(123, 216, 143, 0.22);
-  border-color: var(--green);
-  color: var(--green);
-  font-weight: 600;
-}
+.legend-arcs[hidden], .legend-arcs div[hidden] { display: none; }
 
 /* Ajaliugur */
 #timebar {
@@ -275,10 +365,19 @@ dd.missing { color: var(--muted); font-weight: 400; font-style: italic; }
   #title h1 { font-size: 1.5rem; }
   #title p { display: none; }
   #legend { left: 12px; bottom: 12px; width: 170px; }
-  #controls { top: auto; bottom: 12px; right: 12px; flex-direction: column; align-items: flex-end; gap: 6px; }
-  .chain-btn { padding: 7px 12px; font-size: 0.8rem; }
+  #title { top: 10px; left: 12px; }
+  #title .tree { width: 24px; height: 30px; }
+  #nav {
+    top: 52px; left: 18px; right: 18px;
+    max-width: none;
+    padding: 5px 14px;
+  }
+  #nav a { font-size: 0.85rem; padding: 3px 8px; }
+  #info-card { display: none; }
+  #page-meist { padding-top: 130px; }
+  .page-card { padding: 22px 20px; }
   #timebar {
-    top: 56px; bottom: auto; left: 12px; right: 12px;
+    top: 112px; bottom: auto; left: 12px; right: 12px;
     transform: none; width: auto; min-width: 0;
   }
   #popup, #flow-popup, #place-popup {

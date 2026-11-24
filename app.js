@@ -543,14 +543,11 @@ async function init() {
     }
   }
 
-  // --- Kaks nuppu: kuusepuu tarneahel (live) / tehiskuuse tarneahel (artificial) ---
-  // Põhivaade (mode = 'both'): puhas gloobus, ainult riikide värvid ja pop-up faktidega.
+  // --- Vaade: avaleht ('both'), tehispuu tarneahel ('artificial'), loodusliku puu tarneahel ('live') ---
+  // Avalehel (mode = 'both') on puhas gloobus: ainult riikide värvid ja pop-up faktidega.
   function setMode(m) {
     mode = m;
     showChains = m !== 'both';
-    for (const b of $('controls').querySelectorAll('button[data-mode]')) {
-      b.setAttribute('aria-pressed', String(b.dataset.mode === m));
-    }
     $('legend-label').textContent = MODE_LABELS[m];
     $('legend-max').textContent = fmt(maxByMode[m]);
     // Legendis ainult valitud tarneahela read
@@ -561,12 +558,74 @@ async function init() {
     renderCountryPopup();
     refresh();
   }
-  // Sama nuppu uuesti vajutades minnakse tagasi põhivaatele
-  $('controls').addEventListener('click', (e) => {
-    const b = e.target.closest('button[data-mode]');
-    if (b) setMode(b.dataset.mode === mode ? 'both' : b.dataset.mode);
+
+  // --- Menüü ja lehtede vahetus (aadressi #-osa: #/, #/tehispuu, #/loodus, #/meist) ---
+  const ROUTES = { avaleht: 'both', tehispuu: 'artificial', loodus: 'live', meist: null };
+  const contentCache = {};
+  const dismissedCards = new Set();
+  let routeToken = 0;
+
+  // Loeb sisu/<nimi>.html. Tagastab DocumentFragmendi või null, kui fail puudub või on tühi.
+  async function loadContent(name) {
+    if (!(name in contentCache)) {
+      let html = '';
+      try {
+        const r = await fetch(`sisu/${name}.html`);
+        if (r.ok) html = await r.text();
+      } catch (e) { console.warn('Sisu laadimine ebaõnnestus:', name, e); }
+      const tpl = document.createElement('template');
+      tpl.innerHTML = html;
+      tpl.content.querySelectorAll('script').forEach((s) => s.remove());
+      const empty = !tpl.content.textContent.trim() && !tpl.content.querySelector('img');
+      contentCache[name] = empty ? null : tpl.content;
+    }
+    return contentCache[name];
+  }
+
+  const routeName = () => {
+    const n = location.hash.replace(/^#\/?/, '');
+    return n in ROUTES ? n : 'avaleht';
+  };
+
+  async function route() {
+    const name = routeName();
+    const token = ++routeToken;
+    for (const a of document.querySelectorAll('#nav a')) {
+      if (a.dataset.route === name) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    }
+    const frag = await loadContent(name);
+    if (token !== routeToken) return; // vahepeal vajutati mujale
+
+    const isMeist = name === 'meist';
+    document.body.classList.toggle('on-meist', isMeist);
+    if (isMeist) {
+      closeCountry(); closeFlow(); closePlace();
+      globe.pauseAnimation(); // säästab arvuti jõudu, kui gloobust pole näha
+      let content;
+      if (frag) content = frag.cloneNode(true);
+      else { content = document.createElement('p'); content.textContent = 'Sisu puudub.'; }
+      $('meist-content').replaceChildren(content);
+      $('page-meist').hidden = false;
+      $('page-meist').scrollTop = 0;
+      $('info-card').hidden = true;
+      return;
+    }
+    $('page-meist').hidden = true;
+    globe.resumeAnimation();
+    setMode(ROUTES[name]);
+    if (frag && !dismissedCards.has(name)) {
+      $('info-content').replaceChildren(frag.cloneNode(true));
+      $('info-card').hidden = false;
+    } else {
+      $('info-card').hidden = true;
+    }
+  }
+  $('info-close').addEventListener('click', () => {
+    dismissedCards.add(routeName());
+    $('info-card').hidden = true;
   });
-  $('controls').hidden = false;
+  window.addEventListener('hashchange', route);
 
   // --- Ajaliugur ---
   const range = $('time-range');
@@ -587,6 +646,7 @@ async function init() {
   $('testbadge').hidden = !usesTestData;
   setYear(year);
   setMode(mode);
+  route();
 }
 
 init();

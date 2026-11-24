@@ -73,11 +73,19 @@ flows) ei riku lehte, vastav osa jääb tühjaks.
   (aasta: kuvatakse uusim rida, mis pole sellest aastast uuem)
 - [x] riigi pop-up: kasvatus, trend, tootmine, materjal, jalajälg, utiliseerimine (lõigud järgivad
   lülitit) ja mitu fakti facts.csv-st (kategooria järgi, "general" alati)
-- [x] Põhivaade (juhis): ainult gloobus, kaari ja punkte pole näha; riigile klikkides avanevad faktid.
-  Üleval paremal kaks nuppu: "Kuusepuu tarneahel" (mode `live`: elusate kaared + puufarmid) ja
-  "Tehiskuuse tarneahel" (mode `artificial`: kunstpuude + materjali kaared + tehased). Sama nuppu
-  uuesti vajutades tagasi põhivaatele (mode `both`). Režiim muudab ka riikide värvi, legendi ja
-  pop-up'i lõike. Eraldi "Mõlemad"/"Näita tarneahelaid" nuppe enam pole.
+- [x] Mitme lehega veeb (kliendi/kursuse mockup järgi): üleval paremal pergamentmenüü neljaga,
+  hash-marsruutimine (`#/`, `#/tehispuu`, `#/loodus`, `#/meist`), `route()` app.js-is:
+  - **Avaleht** = puhas gloobus (mode `both`), kaari ja punkte pole näha, riigile klikkides faktid
+  - **Tehispuu tarneahel** = mode `artificial`: kunstpuude + materjali kaared + tehased
+  - **Loodusliku jõulupuu tarneahel** = mode `live`: elusate kaared + puufarmid
+  - **Meist** = tekstileht (gloobus peatatud)
+  Režiim muudab ka riikide värvi, legendi ja pop-up'i lõike. Eraldi lüliti-nuppe enam pole.
+- [x] Sisu hiljem ise kirjutada: **`sisu/avaleht.html`, `tehispuu.html`, `loodus.html`, `meist.html`**
+  (HTML-lõigud; esimesed kolm on väike kaart gloobuse peal, tühi fail = kaarti pole;
+  `meist.html` on terve leht). Failides on eestikeelne juhend kommentaaris. Uue lehe lisamiseks:
+  nav `index.html`-is + `ROUTES` app.js-is + uus fail `sisu/`.
+- [x] Jõulukujundus: tume öine taust + õrn lumesadu (`snow.js`, väljas kui "vähenda liikumist"),
+  pergamentmenüü, serif-pealkirjad (Georgia), kuldsed toonid, kuusk pealkirja kõrval.
 - [ ] GitHub Pages avaldamine (joulupuud.ee), pildid, esitluse läbiproov
 
 ## Failid

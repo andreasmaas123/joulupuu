@@ -4,22 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jõulupuu – maailma jõulupuude gloobus</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 40'%3E%3Cpolygon points='16,2 24,19 21.5,19 27,27 5,27 10.5,19 8,19' fill='%232f8f4e'/%3E%3Crect x='14' y='27' width='4' height='6' fill='%237a4b21'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="globe"></div>
+  <canvas id="snow" aria-hidden="true"></canvas>
 
   <header id="title">
-    <h1>Jõulupuu</h1>
-    <p>Elusate ja kunstjõulupuude teekond üle maailma</p>
+    <svg class="tree" viewBox="0 0 32 40" aria-hidden="true">
+      <polygon points="16,0 19,6 17.5,6 21,12 19,12 24,19 21.5,19 27,27 5,27 10.5,19 8,19 13,12 11,12 14.5,6 13,6" fill="#2f8f4e"/>
+      <rect x="14" y="27" width="4" height="6" fill="#7a4b21"/>
+      <polygon points="16,-1 17,2 20,2 17.6,4 18.5,7 16,5.2 13.5,7 14.4,4 12,2 15,2" fill="#e9c46a" transform="translate(0,1)"/>
+      <circle cx="12" cy="22" r="1.6" fill="#e9c46a"/><circle cx="20" cy="17" r="1.6" fill="#ff6b6b"/>
+      <circle cx="15" cy="12" r="1.4" fill="#ff6b6b"/><circle cx="19" cy="24" r="1.4" fill="#e9c46a"/>
+    </svg>
+    <div>
+      <h1>Jõulupuu</h1>
+      <p>Elusate ja kunstjõulupuude teekond üle maailma</p>
+    </div>
   </header>
+
+  <nav id="nav" aria-label="Peamenüü">
+    <a href="#/" data-route="avaleht">Avaleht</a>
+    <a href="#/tehispuu" data-route="tehispuu">Tehispuu tarneahel</a>
+    <a href="#/loodus" data-route="loodus">Loodusliku jõulupuu tarneahel</a>
+    <a href="#/meist" data-route="meist">Meist</a>
+  </nav>
+
+  <aside id="info-card" hidden>
+    <button id="info-close" type="button" aria-label="Sulge">×</button>
+    <div id="info-content"></div>
+  </aside>
+
+  <main id="page-meist" hidden>
+    <article class="page-card" id="meist-content"></article>
+  </main>
 
   <div id="status">Laen andmeid…</div>
 
-  <div id="controls" hidden>
-    <button type="button" class="chain-btn" data-mode="live" aria-pressed="false">Kuusepuu tarneahel</button>
-    <button type="button" class="chain-btn" data-mode="artificial" aria-pressed="false">Tehiskuuse tarneahel</button>
-  </div>
 
   <aside id="legend" hidden>
     <div class="legend-title"><span id="legend-label">Jõulupuid kokku</span>, <span id="legend-year"></span></div>
@@ -109,6 +132,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="snow.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
