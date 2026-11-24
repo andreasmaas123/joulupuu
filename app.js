@@ -275,7 +275,7 @@ async function init() {
   // Olek
   let year = years.find((y) => !forecastYears.has(y)) ?? years[0];
   let mode = 'both';
-  let showChains = false; // algvaade: ainult gloobus, tarneahelad (kaared ja punktid) peidus
+  let showChains = false; // põhivaade: ainult gloobus, tarneahelad (kaared ja punktid) peidus
   let hovered = null;
   let selected = null;
   let selectedFlow = null;
@@ -543,34 +543,30 @@ async function init() {
     }
   }
 
-  // --- Lüliti: elusad / kunstpuud / mõlemad ---
+  // --- Kaks nuppu: kuusepuu tarneahel (live) / tehiskuuse tarneahel (artificial) ---
+  // Põhivaade (mode = 'both'): puhas gloobus, ainult riikide värvid ja pop-up faktidega.
   function setMode(m) {
     mode = m;
-    for (const b of $('modebar').querySelectorAll('button')) {
+    showChains = m !== 'both';
+    for (const b of $('controls').querySelectorAll('button[data-mode]')) {
       b.setAttribute('aria-pressed', String(b.dataset.mode === m));
     }
     $('legend-label').textContent = MODE_LABELS[m];
     $('legend-max').textContent = fmt(maxByMode[m]);
+    // Legendis ainult valitud tarneahela read
+    document.querySelector('.legend-arcs').hidden = !showChains;
+    for (const d of document.querySelectorAll('.legend-arcs [data-for]')) d.hidden = d.dataset.for !== m;
     renderArcs();
     renderPoints();
     renderCountryPopup();
     refresh();
   }
-  $('modebar').addEventListener('click', (e) => {
+  // Sama nuppu uuesti vajutades minnakse tagasi põhivaatele
+  $('controls').addEventListener('click', (e) => {
     const b = e.target.closest('button[data-mode]');
-    if (b) setMode(b.dataset.mode);
+    if (b) setMode(b.dataset.mode === mode ? 'both' : b.dataset.mode);
   });
   $('controls').hidden = false;
-
-  // --- Tarneahelate sisse/välja lüliti ---
-  $('chain-toggle').addEventListener('click', () => {
-    showChains = !showChains;
-    $('chain-toggle').setAttribute('aria-pressed', String(showChains));
-    $('chain-toggle').textContent = showChains ? 'Peida tarneahelad' : 'Näita tarneahelaid';
-    document.querySelector('.legend-arcs').hidden = !showChains;
-    renderArcs();
-    renderPoints();
-  });
 
   // --- Ajaliugur ---
   const range = $('time-range');

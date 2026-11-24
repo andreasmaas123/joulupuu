@@ -67,15 +67,17 @@ flows) ei riku lehte, vastav osa jääb tühjaks.
   klikitavad, vooluandmete pop-up)
 - [x] 5 ajaliugur (aastad leitakse CSV-dest ise, esitusnuppu pole; prognoosiaasta = `is_forecast` true:
   silt "PROGNOOS", punktiirkaared, legendis "(prognoos)")
-- [x] 6 lüliti mõlemad / elusad / kunstpuud (muudab riigivärve, legendit ja kaari; materjalivood
-  kuuluvad "kunstpuude" alla; värviskaala maksimum on iga režiimi kohta kõigi aastate peale)
+- [x] 6 lüliti elusad / kunstpuud (vt allpool kaks tarneahela nuppu; materjalivood kuuluvad
+  "kunstpuude" alla; värviskaala maksimum on iga režiimi kohta kõigi aastate peale)
 - [x] places.csv: farmid (lime) ja tehased (oranž) punktidena, klikitavad, lüliti ja aasta järgi
   (aasta: kuvatakse uusim rida, mis pole sellest aastast uuem)
 - [x] riigi pop-up: kasvatus, trend, tootmine, materjal, jalajälg, utiliseerimine (lõigud järgivad
   lülitit) ja mitu fakti facts.csv-st (kategooria järgi, "general" alati)
-- [x] Algvaade (juhis): ainult gloobus, kaari ja punkte pole näha. Nupp "Näita tarneahelaid"
-  (üleval paremal, `showChains` app.js-is) lülitab kaared + farmid/tehased + nende legendi sisse.
-  Riigile klikkides avanevad faktid alati.
+- [x] Põhivaade (juhis): ainult gloobus, kaari ja punkte pole näha; riigile klikkides avanevad faktid.
+  Üleval paremal kaks nuppu: "Kuusepuu tarneahel" (mode `live`: elusate kaared + puufarmid) ja
+  "Tehiskuuse tarneahel" (mode `artificial`: kunstpuude + materjali kaared + tehased). Sama nuppu
+  uuesti vajutades tagasi põhivaatele (mode `both`). Režiim muudab ka riikide värvi, legendi ja
+  pop-up'i lõike. Eraldi "Mõlemad"/"Näita tarneahelaid" nuppe enam pole.
 - [ ] GitHub Pages avaldamine (joulupuud.ee), pildid, esitluse läbiproov
 
 ## Failid

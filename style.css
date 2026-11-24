@@ -190,17 +190,9 @@ body::before {
   gap: 10px;
 }
 #controls[hidden], .legend-arcs[hidden] { display: none; }
-#modebar {
-  display: flex;
-  padding: 4px;
-  gap: 2px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  backdrop-filter: blur(6px);
-}
-#chain-toggle {
-  padding: 10px 16px;
+.legend-arcs div[hidden] { display: none; }
+.chain-btn {
+  padding: 10px 18px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--card);
@@ -210,25 +202,10 @@ body::before {
   cursor: pointer;
   backdrop-filter: blur(6px);
 }
-#chain-toggle:hover { color: var(--text); }
-#chain-toggle[aria-pressed="true"] {
+.chain-btn:hover { color: var(--text); }
+.chain-btn[aria-pressed="true"] {
   background: rgba(123, 216, 143, 0.22);
-  color: var(--green);
-  font-weight: 600;
-}
-#modebar button {
-  padding: 7px 16px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--muted);
-  font: inherit;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-#modebar button:hover { color: var(--text); }
-#modebar button[aria-pressed="true"] {
-  background: rgba(123, 216, 143, 0.22);
+  border-color: var(--green);
   color: var(--green);
   font-weight: 600;
 }
@@ -299,8 +276,7 @@ dd.missing { color: var(--muted); font-weight: 400; font-style: italic; }
   #title p { display: none; }
   #legend { left: 12px; bottom: 12px; width: 170px; }
   #controls { top: auto; bottom: 12px; right: 12px; flex-direction: column; align-items: flex-end; gap: 6px; }
-  #modebar button { padding: 7px 10px; font-size: 0.8rem; }
-  #chain-toggle { padding: 7px 12px; font-size: 0.8rem; }
+  .chain-btn { padding: 7px 12px; font-size: 0.8rem; }
   #timebar {
     top: 56px; bottom: auto; left: 12px; right: 12px;
     transform: none; width: auto; min-width: 0;
