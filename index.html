@@ -31,6 +31,8 @@
       <div><i class="arc live"></i> elusad puud</div>
       <div><i class="arc artificial"></i> kunstpuud</div>
       <div><i class="arc material"></i> materjal</div>
+      <div><i class="dot farm"></i> puufarm</div>
+      <div><i class="dot factory"></i> kunstpuutehas</div>
       <div class="legend-note">Punktiirjoon = prognoos. Joone paksus = maht.</div>
     </div>
     <div id="testbadge" hidden>Testandmed – väljamõeldud numbrid</div>
@@ -60,18 +62,50 @@
     <p class="source">Allikas: <span id="f-source"></span></p>
   </aside>
 
+  <aside id="place-popup" hidden role="dialog" aria-labelledby="place-title">
+    <button id="place-close" aria-label="Sulge">×</button>
+    <h2 id="place-title"></h2>
+    <p id="place-year" class="popup-year"></p>
+    <dl>
+      <dt>Tüüp</dt><dd id="pl-type"></dd>
+      <dt>Riik</dt><dd id="pl-country"></dd>
+      <dt>Sort / toode</dt><dd id="pl-product"></dd>
+      <dt>Maht</dt><dd id="pl-volume"></dd>
+      <dt>Märkus</dt><dd id="pl-note"></dd>
+    </dl>
+    <p class="source">Allikas: <span id="pl-source"></span></p>
+  </aside>
+
   <aside id="popup" hidden role="dialog" aria-labelledby="popup-name">
     <button id="popup-close" aria-label="Sulge">×</button>
     <div id="popup-image"></div>
     <h2 id="popup-name"></h2>
     <p id="popup-year" class="popup-year"></p>
-    <dl>
-      <dt>Elusad puud</dt><dd id="p-live"></dd>
-      <dt>Kunstpuud</dt><dd id="p-art"></dd>
-      <dt>Peamine sort</dt><dd id="p-species"></dd>
-    </dl>
+    <section id="sec-live">
+      <h3>Elusad puud</h3>
+      <dl>
+        <dt>Arv aastas</dt><dd id="p-live"></dd>
+        <dt>Peamine sort</dt><dd id="p-species"></dd>
+      </dl>
+      <p class="detail-label">Kasvatusprotsess</p>
+      <p id="p-growing" class="detail"></p>
+      <p class="detail-label">Trend</p>
+      <p id="p-trend" class="detail"></p>
+    </section>
+    <section id="sec-art">
+      <h3>Kunstpuud</h3>
+      <dl>
+        <dt>Arv aastas</dt><dd id="p-art"></dd>
+        <dt>Toodetakse riigis</dt><dd id="p-production"></dd>
+        <dt>Materjal</dt><dd id="p-material"></dd>
+      </dl>
+      <p class="detail-label">Jalajälg</p>
+      <p id="p-footprint" class="detail"></p>
+      <p class="detail-label">Utiliseerimine</p>
+      <p id="p-disposal" class="detail"></p>
+    </section>
     <p class="fact-label">Teadsid?</p>
-    <p id="p-fact" class="fact"></p>
+    <ul id="p-facts" class="facts"></ul>
     <p class="source">Allikas: <span id="p-source"></span></p>
   </aside>
 

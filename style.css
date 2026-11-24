@@ -79,7 +79,8 @@ body::before {
   color: var(--muted);
   backdrop-filter: blur(6px);
 }
-#legend[hidden], #popup[hidden], #flow-popup[hidden], #timebar[hidden], #testbadge[hidden],
+#legend[hidden], #popup[hidden], #flow-popup[hidden], #place-popup[hidden], #timebar[hidden],
+#testbadge[hidden], section[hidden],
 #time-badge[hidden] { display: none; }
 .legend-title { color: var(--text); margin-bottom: 8px; }
 .legend-bar {
@@ -103,13 +104,12 @@ body::before {
 }
 
 /* Pop-up */
-#popup, #flow-popup {
+#popup, #flow-popup, #place-popup {
   position: fixed;
-  top: 50%;
+  top: 76px;
   right: 24px;
-  transform: translateY(-50%);
   width: 340px;
-  max-height: calc(100vh - 48px);
+  max-height: calc(100vh - 100px);
   overflow-y: auto;
   padding: 0 0 18px;
   background: var(--card);
@@ -118,16 +118,16 @@ body::before {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
 }
-#popup h2, #flow-popup h2 {
+#popup h2, #flow-popup h2, #place-popup h2 {
   margin: 16px 20px 2px;
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--gold);
 }
-#flow-popup { padding-top: 24px; }
+#flow-popup, #place-popup { padding-top: 24px; }
 .popup-year { margin: 0 20px 12px; color: var(--muted); font-size: 0.85rem; }
 .popup-year.forecast { color: var(--gold); }
-#popup-close, #flow-close {
+#popup-close, #flow-close, #place-close {
   position: absolute;
   top: 8px; right: 10px;
   width: 32px; height: 32px;
@@ -138,7 +138,36 @@ body::before {
   cursor: pointer;
   z-index: 1;
 }
-#popup-close:hover, #flow-close:hover { background: rgba(123, 216, 143, 0.3); }
+#popup-close:hover, #flow-close:hover, #place-close:hover { background: rgba(123, 216, 143, 0.3); }
+
+/* Riigi pop-upi lõigud */
+#popup section { margin-top: 14px; }
+#popup section h3 {
+  margin: 0 20px 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.detail-label { margin: 10px 20px 0; font-size: 0.8rem; color: var(--muted); }
+.detail { margin: 2px 20px 0; line-height: 1.4; }
+.detail.missing { color: var(--muted); font-style: italic; }
+.facts { margin: 2px 20px 0; padding-left: 18px; }
+.facts li { margin-bottom: 6px; line-height: 1.45; }
+.facts li.missing { color: var(--muted); font-style: italic; list-style: none; margin-left: -18px; }
+.img-credit { position: absolute; right: 10px; bottom: 6px; font-size: 0.7rem; color: #fffc; text-shadow: 0 0 4px #000; }
+#popup-image { position: relative; }
+
+/* Legendi punktid */
+.legend-arcs i.dot {
+  display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  margin: 0 12px 0 6px; vertical-align: middle;
+}
+.dot.farm { background: #d4ff7a; box-shadow: 0 0 6px #d4ff7a; }
+.dot.factory { background: #ff9f5a; box-shadow: 0 0 6px #ff9f5a; }
 
 /* Legendi kaared */
 .legend-arcs { margin-top: 10px; display: grid; gap: 4px; }
@@ -263,7 +292,7 @@ dd.missing { color: var(--muted); font-weight: 400; font-style: italic; }
     top: 56px; bottom: auto; left: 12px; right: 12px;
     transform: none; width: auto; min-width: 0;
   }
-  #popup, #flow-popup {
+  #popup, #flow-popup, #place-popup {
     top: auto; bottom: 0; right: 0; left: 0;
     transform: none; width: auto;
     max-height: 65vh;

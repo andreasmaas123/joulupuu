@@ -48,9 +48,9 @@ info 1. detsembriks, esitlus 8. detsembril.
 
 Testandmete genereerija ei ole repos; kui vaja, muuda CSV-sid otse.
 
-**Kood ei kasuta veel** (andmeformaat valmis, joonistamine tegemata): `places.csv`, `facts.csv`,
-uued countries-veerud (kasvatus, materjal, jalajälg, utiliseerimine). Riigi pop-up näitab praegu
-ainult põhikomplekti. Kaared kasutavad `flows.csv`, aasta `year` järgi.
+Kõik neli andmefaili on lehel kasutusel. `flows.csv` → kaared, `places.csv` → punktid,
+`facts.csv` ja uued countries-veerud → riigi pop-up. Puuduvad valikulised failid (places, facts,
+flows) ei riku lehte, vastav osa jääb tühjaks.
 
 ## Lehe eesmärk (lõplik)
 1. 3D-gloobus, pööramine ja suumimine hiirega
@@ -69,7 +69,11 @@ ainult põhikomplekti. Kaared kasutavad `flows.csv`, aasta `year` järgi.
   silt "PROGNOOS", punktiirkaared, legendis "(prognoos)")
 - [x] 6 lüliti mõlemad / elusad / kunstpuud (muudab riigivärve, legendit ja kaari; materjalivood
   kuuluvad "kunstpuude" alla; värviskaala maksimum on iga režiimi kohta kõigi aastate peale)
-- [ ] places.csv (farmid, tehased), facts.csv, uued countries-veerud pop-up'is
+- [x] places.csv: farmid (lime) ja tehased (oranž) punktidena, klikitavad, lüliti ja aasta järgi
+  (aasta: kuvatakse uusim rida, mis pole sellest aastast uuem)
+- [x] riigi pop-up: kasvatus, trend, tootmine, materjal, jalajälg, utiliseerimine (lõigud järgivad
+  lülitit) ja mitu fakti facts.csv-st (kategooria järgi, "general" alati)
+- [ ] GitHub Pages avaldamine (joulupuud.ee), pildid, esitluse läbiproov
 
 ## Failid
 - `index.html`, `style.css`, `app.js` – leht

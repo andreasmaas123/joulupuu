@@ -17,6 +17,18 @@ const MODE_FLOW_TYPES = {
   artificial: ['artificial', 'material'],
 };
 
+// Farmid ja tehased (places.csv). `mode` = millise lüliti valikuga need nähtavad on.
+const PLACE_TYPES = {
+  farm: { name: 'Puufarm', color: '#d4ff7a', mode: 'live' },
+  factory: { name: 'Kunstpuutehas', color: '#ff9f5a', mode: 'artificial' },
+};
+// Faktide kategooriad, mida igas režiimis näidatakse (üldised faktid alati)
+const MODE_FACT_CATS = {
+  both: ['live', 'artificial', 'general'],
+  live: ['live', 'general'],
+  artificial: ['artificial', 'general'],
+};
+
 const $ = (id) => document.getElementById(id);
 
 // --- Abifunktsioonid ---------------------------------------------------
@@ -84,7 +96,7 @@ function setYearLine(el, year, forecast) {
   el.classList.toggle('forecast', !!forecast);
 }
 
-function showImage(url, alt) {
+function showImage(url, alt, credit) {
   const box = $('popup-image');
   box.textContent = '';
   // Lubame ainult https-aadressid
@@ -94,6 +106,12 @@ function showImage(url, alt) {
     img.onerror = () => { box.textContent = 'pilt puudub'; };
     img.src = url;
     box.appendChild(img);
+    if (credit) {
+      const c = document.createElement('span');
+      c.className = 'img-credit';
+      c.textContent = credit;
+      box.appendChild(c);
+    }
   } else {
     box.textContent = 'pilt puudub';
   }
@@ -127,6 +145,11 @@ async function init() {
     console.warn('flows.csv laadimine ebaõnnestus, kaari ei näidata', e);
     flowRows = [];
   }
+  // Farmid ja faktid on samuti lisa: kui faili pole, jääb see osa lihtsalt tühjaks
+  let placeRows = [];
+  let factRows = [];
+  try { placeRows = await readCsv('data/places.csv'); } catch (e) { console.warn('places.csv puudub', e); }
+  try { factRows = await readCsv('data/facts.csv'); } catch (e) { console.warn('facts.csv puudub', e); }
   status.remove();
 
   let usesTestData = false;
@@ -151,10 +174,63 @@ async function init() {
       live, art,
       total: live === null && art === null ? null : (live ?? 0) + (art ?? 0),
       species: clean(r.main_species),
+      growing: clean(r.live_growing_process),
+      trend: clean(r.live_trend),
+      production: toNumber(r.artificial_production),
+      material: clean(r.artificial_material),
+      footprint: clean(r.artificial_footprint),
+      disposal: clean(r.artificial_disposal),
       fact: clean(r.top_fact),
       image: clean(r.image_url),
       source: clean(r.source),
     };
+  }
+
+  // Faktid: factsByIso[iso3] = [{category, fact, image, credit, source}]
+  const factsByIso = {};
+  for (const r of factRows) {
+    const iso = clean(r.iso3)?.toUpperCase();
+    const fact = clean(r.fact);
+    if (!iso || !fact) continue;
+    if (clean(r.source) === 'TESTANDMED') usesTestData = true;
+    const cat = clean(r.category)?.toLowerCase();
+    (factsByIso[iso] ||= []).push({
+      category: ['live', 'artificial'].includes(cat) ? cat : 'general',
+      fact, image: clean(r.image_url), credit: clean(r.image_credit), source: clean(r.source),
+    });
+  }
+
+  // Farmid ja tehased: placeRowsByKey[võti] = read eri aastate kohta.
+  // Igal aastal näitame kõige uuemat rida, mis ei ole sellest aastast uuem (või aastata rida).
+  const placeGroups = {};
+  for (const r of placeRows) {
+    const lat = toNumber(r.lat);
+    const lng = toNumber(r.lng);
+    const type = clean(r.place_type)?.toLowerCase();
+    const name = clean(r.name);
+    if (lat === null || lng === null || !PLACE_TYPES[type] || !name) {
+      console.warn('places.csv rida jäeti vahele (puudub nimi, tüüp või koordinaat):', r);
+      continue;
+    }
+    if (clean(r.source) === 'TESTANDMED') usesTestData = true;
+    const iso = clean(r.iso3)?.toUpperCase() || null;
+    const key = [name, iso, lat, lng, type].join('|');
+    (placeGroups[key] ||= []).push({
+      name, type, iso, lat, lng,
+      product: clean(r.product), volume: toNumber(r.volume), unit: clean(r.unit),
+      year: toNumber(r.year), note: clean(r.note), source: clean(r.source),
+    });
+  }
+  const placeList = Object.values(placeGroups);
+  for (const g of placeList) g.forEach((p) => { if (p.year !== null) yearSet.add(p.year); });
+  function placesForYear(y) {
+    const out = [];
+    for (const g of placeList) {
+      const sorted = g.filter((p) => p.year === null || p.year <= y)
+        .sort((a, b) => (a.year ?? -Infinity) - (b.year ?? -Infinity));
+      if (sorted.length) out.push(sorted[sorted.length - 1]);
+    }
+    return out;
   }
 
   // Vood: flowsByYear[aasta] = [...]
@@ -203,6 +279,7 @@ async function init() {
   let hovered = null;
   let selected = null;
   let selectedFlow = null;
+  let selectedPlace = null;
   const rowOf = (f) => byYear[year]?.[f.properties.ADM0_A3] || null;
 
   // --- Gloobus ---
@@ -235,6 +312,7 @@ async function init() {
     .onPolygonClick((f) => {
       selected = f;
       closeFlow();
+      closePlace();
       refresh();
       renderCountryPopup();
       globe.pointOfView({ ...centerOf(f), altitude: 1.8 }, 900);
@@ -261,9 +339,30 @@ async function init() {
     .onArcClick((d) => {
       selected = null;
       $('popup').hidden = true;
+      closePlace();
       selectedFlow = d;
       refresh();
       renderFlowPopup();
+    })
+    // Farmid ja tehased (punktid)
+    .pointLat('lat').pointLng('lng')
+    .pointColor((d) => PLACE_TYPES[d.type].color)
+    .pointAltitude(0.05)
+    .pointRadius(0.8)
+    .pointsMerge(false)
+    .pointLabel((d) => {
+      const vol = d.volume !== null ? `${fmt(d.volume)} ${esc(d.unit || '')}` : MISSING;
+      return `<div class="tip"><b>${esc(d.name)}</b><br>${PLACE_TYPES[d.type].name}`
+        + `${d.product ? ' · ' + esc(d.product) : ''}<br>${vol}</div>`;
+    })
+    .onPointHover((d) => { el.style.cursor = d ? 'pointer' : 'grab'; })
+    .onPointClick((d) => {
+      selected = null;
+      $('popup').hidden = true;
+      closeFlow();
+      selectedPlace = d;
+      refresh();
+      renderPlacePopup();
     });
 
   // Gloobuse pind tumesinine
@@ -295,13 +394,76 @@ async function init() {
     const name = (row && row.country_et) || nameOfIso(iso);
     $('popup-name').textContent = name;
     setYearLine($('popup-year'), year, forecastYears.has(year));
-    setValue($('p-live'), row && row.live !== null ? fmt(row.live) + ' tk' : null);
-    setValue($('p-art'), row && row.art !== null ? fmt(row.art) + ' tk' : null);
-    setValue($('p-species'), row ? row.species : null);
-    setValue($('p-fact'), row ? row.fact : null);
-    setValue($('p-source'), row ? row.source : null);
-    showImage(row ? row.image : null, name);
+    const tk = (n) => (n !== null && n !== undefined ? fmt(n) + ' tk' : null);
+
+    // Lülitiga valitud tüübi lõigud
+    $('sec-live').hidden = mode === 'artificial';
+    $('sec-art').hidden = mode === 'live';
+    setValue($('p-live'), tk(row?.live));
+    setValue($('p-species'), row?.species);
+    setValue($('p-growing'), row?.growing);
+    setValue($('p-trend'), row?.trend);
+    setValue($('p-art'), tk(row?.art));
+    setValue($('p-production'), tk(row?.production));
+    setValue($('p-material'), row?.material);
+    setValue($('p-footprint'), row?.footprint);
+    setValue($('p-disposal'), row?.disposal);
+    setValue($('p-source'), row?.source);
+
+    // Faktid: riigi enda fakt (countries.csv) + facts.csv read valitud kategooriatest
+    const facts = [];
+    if (row?.fact) facts.push({ fact: row.fact });
+    const cats = MODE_FACT_CATS[mode];
+    for (const f of factsByIso[iso] || []) {
+      if (cats.includes(f.category) && !facts.some((x) => x.fact === f.fact)) facts.push(f);
+    }
+    const list = $('p-facts');
+    list.replaceChildren(...(facts.length ? facts : [{ fact: MISSING, missing: true }]).map((f) => {
+      const li = document.createElement('li');
+      li.textContent = f.fact;
+      if (f.missing) li.className = 'missing';
+      return li;
+    }));
+
+    // Pilt: riigi oma pilt, muidu esimene faktipilt
+    const withImage = (factsByIso[iso] || []).find((f) => f.image);
+    if (row?.image) showImage(row.image, name);
+    else if (withImage) showImage(withImage.image, name, withImage.credit);
+    else showImage(null, name);
     $('popup').hidden = false;
+  }
+
+  // --- Farmi / tehase pop-up ---
+  function renderPlacePopup() {
+    const d = selectedPlace;
+    if (!d) return;
+    $('place-title').textContent = d.name;
+    $('place-year').textContent = d.year !== null ? `Andmed: ${d.year}` : '';
+    $('place-year').classList.toggle('forecast', d.year !== null && forecastYears.has(d.year));
+    setValue($('pl-type'), PLACE_TYPES[d.type].name);
+    setValue($('pl-country'), d.iso ? nameOfIso(d.iso) : null);
+    setValue($('pl-product'), d.product);
+    setValue($('pl-volume'), d.volume !== null ? `${fmt(d.volume)} ${d.unit || ''}`.trim() : null);
+    setValue($('pl-note'), d.note);
+    setValue($('pl-source'), d.source);
+    $('place-popup').hidden = false;
+  }
+
+  function closePlace() {
+    $('place-popup').hidden = true;
+    selectedPlace = null;
+  }
+
+  // Punktid valitud aasta ja lüliti järgi
+  function renderPoints() {
+    const visible = placesForYear(year).filter((p) => mode === 'both' || PLACE_TYPES[p.type].mode === mode);
+    globe.pointsData(visible);
+    if (selectedPlace) {
+      const s = selectedPlace;
+      selectedPlace = visible.find((p) => p.name === s.name && p.lat === s.lat && p.lng === s.lng
+        && p.type === s.type) || null;
+      if (selectedPlace) renderPlacePopup(); else closePlace();
+    }
   }
 
   function closeCountry() {
@@ -330,8 +492,9 @@ async function init() {
 
   $('popup-close').addEventListener('click', closeCountry);
   $('flow-close').addEventListener('click', closeFlow);
+  $('place-close').addEventListener('click', closePlace);
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { closeCountry(); closeFlow(); }
+    if (e.key === 'Escape') { closeCountry(); closeFlow(); closePlace(); }
   });
 
   // --- Aasta valimine ---
@@ -345,6 +508,7 @@ async function init() {
     $('legend-year').textContent = forecast ? `${y} (prognoos)` : y;
 
     renderArcs();
+    renderPoints();
     renderCountryPopup();
     refresh();
   }
@@ -388,6 +552,8 @@ async function init() {
     $('legend-label').textContent = MODE_LABELS[m];
     $('legend-max').textContent = fmt(maxByMode[m]);
     renderArcs();
+    renderPoints();
+    renderCountryPopup();
     refresh();
   }
   $('modebar').addEventListener('click', (e) => {
