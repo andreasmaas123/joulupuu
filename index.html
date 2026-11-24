@@ -21,13 +21,44 @@
     <div class="legend-bar"></div>
     <div class="legend-scale"><span id="legend-min">0</span><span id="legend-max"></span></div>
     <div class="legend-nodata"><i></i> andmed puuduvad</div>
+    <div class="legend-arcs">
+      <div><i class="arc live"></i> elusad puud</div>
+      <div><i class="arc artificial"></i> kunstpuud</div>
+      <div><i class="arc material"></i> materjal</div>
+      <div class="legend-note">Punktiirjoon = prognoos. Joone paksus = maht.</div>
+    </div>
     <div id="testbadge" hidden>Testandmed – väljamõeldud numbrid</div>
+  </aside>
+
+  <div id="timebar" hidden>
+    <button id="play" type="button" aria-label="Esita aastad">▶</button>
+    <div class="time-main">
+      <div class="time-top">
+        <span id="time-year"></span>
+        <span id="time-badge" hidden>PROGNOOS</span>
+      </div>
+      <input id="time-range" type="range" min="0" max="0" step="1" value="0" aria-label="Aasta">
+      <div id="time-ticks"></div>
+    </div>
+  </div>
+
+  <aside id="flow-popup" hidden role="dialog" aria-labelledby="flow-title">
+    <button id="flow-close" aria-label="Sulge">×</button>
+    <h2 id="flow-title"></h2>
+    <p id="flow-year" class="popup-year"></p>
+    <dl>
+      <dt>Tüüp</dt><dd id="f-type"></dd>
+      <dt>Maht</dt><dd id="f-volume"></dd>
+      <dt>Märkus</dt><dd id="f-note"></dd>
+    </dl>
+    <p class="source">Allikas: <span id="f-source"></span></p>
   </aside>
 
   <aside id="popup" hidden role="dialog" aria-labelledby="popup-name">
     <button id="popup-close" aria-label="Sulge">×</button>
     <div id="popup-image"></div>
     <h2 id="popup-name"></h2>
+    <p id="popup-year" class="popup-year"></p>
     <dl>
       <dt>Elusad puud</dt><dd id="p-live"></dd>
       <dt>Kunstpuud</dt><dd id="p-art"></dd>

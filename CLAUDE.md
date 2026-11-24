@@ -49,8 +49,8 @@ info 1. detsembriks, esitlus 8. detsembril.
 Testandmete genereerija ei ole repos; kui vaja, muuda CSV-sid otse.
 
 **Kood ei kasuta veel** (andmeformaat valmis, joonistamine tegemata): `places.csv`, `facts.csv`,
-vood, uued countries-veerud (kasvatus, materjal, jalajälg, utiliseerimine). Pop-up näitab praegu
-ainult vana põhikomplekti.
+uued countries-veerud (kasvatus, materjal, jalajälg, utiliseerimine). Riigi pop-up näitab praegu
+ainult põhikomplekti. Kaared kasutavad `flows.csv`, aasta `year` järgi.
 
 ## Lehe eesmärk (lõplik)
 1. 3D-gloobus, pööramine ja suumimine hiirega
@@ -62,8 +62,13 @@ ainult vana põhikomplekti.
 7. Kõik tekstid eesti keeles
 
 ## Staatus
-- [x] 1–3 (gloobus, värvid, pop-up) – praegu kuvatakse kindlalt 2025 (`YEAR` app.js-is)
-- [ ] 4 kaared, 5 ajaliugur, 6 lüliti
+- [x] 1–3 gloobus, värvid, riigi pop-up
+- [x] 4 kaared (flows.csv; roheline = elusad, punane = kunst, kuldne = materjal; paksus = maht,
+  klikitavad, vooluandmete pop-up)
+- [x] 5 ajaliugur (aastad leitakse CSV-dest ise, ▶ esitus; prognoosiaasta = `is_forecast` true:
+  silt "PROGNOOS", punktiirkaared, legendis "(prognoos)")
+- [ ] 6 lüliti elusad / kunstpuud / mõlemad
+- [ ] places.csv (farmid, tehased), facts.csv, uued countries-veerud pop-up'is
 
 ## Failid
 - `index.html`, `style.css`, `app.js` – leht

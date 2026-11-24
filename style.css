@@ -79,7 +79,8 @@ body::before {
   color: var(--muted);
   backdrop-filter: blur(6px);
 }
-#legend[hidden], #popup[hidden], #testbadge[hidden] { display: none; }
+#legend[hidden], #popup[hidden], #flow-popup[hidden], #timebar[hidden], #testbadge[hidden],
+#time-badge[hidden] { display: none; }
 .legend-title { color: var(--text); margin-bottom: 8px; }
 .legend-bar {
   height: 10px;
@@ -102,7 +103,7 @@ body::before {
 }
 
 /* Pop-up */
-#popup {
+#popup, #flow-popup {
   position: fixed;
   top: 50%;
   right: 24px;
@@ -117,13 +118,16 @@ body::before {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
 }
-#popup h2 {
-  margin: 16px 20px 10px;
+#popup h2, #flow-popup h2 {
+  margin: 16px 20px 2px;
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--gold);
 }
-#popup-close {
+#flow-popup { padding-top: 24px; }
+.popup-year { margin: 0 20px 12px; color: var(--muted); font-size: 0.85rem; }
+.popup-year.forecast { color: var(--gold); }
+#popup-close, #flow-close {
   position: absolute;
   top: 8px; right: 10px;
   width: 32px; height: 32px;
@@ -134,7 +138,61 @@ body::before {
   cursor: pointer;
   z-index: 1;
 }
-#popup-close:hover { background: rgba(123, 216, 143, 0.3); }
+#popup-close:hover, #flow-close:hover { background: rgba(123, 216, 143, 0.3); }
+
+/* Legendi kaared */
+.legend-arcs { margin-top: 10px; display: grid; gap: 4px; }
+.legend-arcs i.arc {
+  display: inline-block; width: 22px; height: 3px; border-radius: 2px;
+  margin-right: 8px; vertical-align: middle;
+}
+.arc.live { background: #6df08a; }
+.arc.artificial { background: #ff5a5a; }
+.arc.material { background: #f3c969; }
+.legend-note { font-size: 0.75rem; margin-top: 2px; }
+
+/* Ajaliugur */
+#timebar {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  width: min(460px, calc(100vw - 520px));
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+#play {
+  flex: none;
+  width: 38px; height: 38px;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: rgba(123, 216, 143, 0.12);
+  color: var(--green);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+#play:hover { background: rgba(123, 216, 143, 0.3); }
+.time-main { flex: 1; min-width: 0; }
+.time-top { display: flex; align-items: baseline; gap: 10px; }
+#time-year { font-size: 1.5rem; font-weight: 600; color: var(--text); }
+#time-badge {
+  padding: 2px 8px; border-radius: 6px;
+  background: rgba(233, 196, 106, 0.18);
+  color: var(--gold);
+  font-size: 0.75rem; letter-spacing: 0.08em;
+}
+#time-range { width: 100%; margin: 6px 0 0; accent-color: var(--green); cursor: pointer; }
+#time-ticks {
+  display: flex; justify-content: space-between;
+  font-size: 0.72rem; color: var(--muted);
+}
+#time-ticks .forecast { color: var(--gold); }
 
 #popup-image {
   height: 150px;
@@ -168,7 +226,11 @@ dd.missing { color: var(--muted); font-weight: 400; font-style: italic; }
   #title h1 { font-size: 1.5rem; }
   #title p { display: none; }
   #legend { left: 12px; bottom: 12px; width: 170px; }
-  #popup {
+  #timebar {
+    top: 56px; bottom: auto; left: 12px; right: 12px;
+    transform: none; width: auto; min-width: 0;
+  }
+  #popup, #flow-popup {
     top: auto; bottom: 0; right: 0; left: 0;
     transform: none; width: auto;
     max-height: 65vh;
