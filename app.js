@@ -18,8 +18,8 @@ const MODE_FLOW_TYPES = {
 
 // Farmid ja tehased (places.csv). `mode` = millise lüliti valikuga need nähtavad on.
 const PLACE_TYPES = {
-  farm: { name: 'Puufarm', color: '#d4ff7a', mode: 'live' },
-  factory: { name: 'Kunstpuutehas', color: '#ff9f5a', mode: 'artificial' },
+  farm: { name: 'Puufarm', icon: 'ico-tree', view: '0 0 32 40', mode: 'live' },
+  factory: { name: 'Kunstpuutehas', icon: 'ico-house', view: '0 0 40 36', mode: 'artificial' },
 };
 // Faktide kategooriad, mida igas režiimis näidatakse (üldised faktid alati)
 const MODE_FACT_CATS = {
@@ -344,19 +344,27 @@ async function init() {
       refresh();
       renderFlowPopup();
     })
-    // Farmid ja tehased (punktid)
-    .pointLat('lat').pointLng('lng')
-    .pointColor((d) => PLACE_TYPES[d.type].color)
-    .pointAltitude(0.05)
-    .pointRadius(0.8)
-    .pointsMerge(false)
-    .pointLabel((d) => {
-      const vol = d.volume !== null ? `${fmt(d.volume)} ${esc(d.unit || '')}` : MISSING;
-      return `<div class="tip"><b>${esc(d.name)}</b><br>${PLACE_TYPES[d.type].name}`
-        + `${d.product ? ' · ' + esc(d.product) : ''}<br>${vol}</div>`;
-    })
-    .onPointHover((d) => { el.style.cursor = d ? 'pointer' : 'grab'; })
-    .onPointClick((d) => {
+    // Farmid (kuusekesed) ja tehased (jõulumajad) HTML-markeritena
+    .htmlLat('lat').htmlLng('lng')
+    .htmlAltitude(0.01)
+    .htmlTransitionDuration(0)
+    .htmlElement((d) => makeMarker(d))
+    // Gloobuse taha jäävad markerid peidame
+    .htmlElementVisibilityModifier((node, visible) => {
+      node.style.opacity = visible ? '1' : '0';
+      node.style.pointerEvents = visible ? 'auto' : 'none';
+    });
+
+  function makeMarker(d) {
+    const t = PLACE_TYPES[d.type];
+    const node = document.createElement('div');
+    node.className = `marker ${d.type}`;
+    node.setAttribute('role', 'button');
+    node.setAttribute('aria-label', `${t.name}: ${d.name}`);
+    node.title = `${d.name} · ${t.name}${d.volume !== null ? ' · ' + fmt(d.volume) + ' ' + (d.unit || '') : ''}`;
+    node.innerHTML = `<svg viewBox="${t.view}" aria-hidden="true"><use href="#${t.icon}"/></svg>`;
+    node.addEventListener('click', (ev) => {
+      ev.stopPropagation();
       selected = null;
       $('popup').hidden = true;
       closeFlow();
@@ -364,6 +372,8 @@ async function init() {
       refresh();
       renderPlacePopup();
     });
+    return node;
+  }
 
   // Gloobuse pind tumesinine
   const mat = globe.globeMaterial();
@@ -457,7 +467,7 @@ async function init() {
   // Punktid valitud aasta ja lüliti järgi
   function renderPoints() {
     const visible = (showChains ? placesForYear(year) : []).filter((p) => mode === 'both' || PLACE_TYPES[p.type].mode === mode);
-    globe.pointsData(visible);
+    globe.htmlElementsData(visible);
     if (selectedPlace) {
       const s = selectedPlace;
       selectedPlace = visible.find((p) => p.name === s.name && p.lat === s.lat && p.lng === s.lng
@@ -587,6 +597,69 @@ async function init() {
     return n in ROUTES ? n : 'avaleht';
   };
 
+  // --- Avalehe sissejuhatus: suur pealkiri, gloobus ilmub scrollides sujuvalt ---
+  const scroller = $('scroller');
+  const hero = $('hero');
+  let homeActive = false;
+  let ticking = false;
+  const clamp01 = (x) => Math.min(1, Math.max(0, x));
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+  const FINAL_ALTITUDE = 2.5;
+
+  function applyProgress() {
+    if (!homeActive) return;
+    const max = scroller.scrollHeight - scroller.clientHeight;
+    const p = max > 0 ? clamp01(scroller.scrollTop / max) : 1;
+    const g = easeOut(clamp01((p - 0.25) / 0.65)); // gloobuse esiletulek
+
+    hero.style.opacity = String(1 - clamp01(p * 1.7));
+    hero.style.transform = `translateY(${-p * 90}px) scale(${1 + p * 0.12})`;
+
+    el.style.opacity = String(g);
+    el.style.transform = g >= 1 ? '' : `translateY(${(1 - g) * 10}vh) scale(${0.78 + 0.22 * g})`;
+    globe.pointOfView({ altitude: 4.4 - (4.4 - FINAL_ALTITUDE) * g }, 0);
+
+    document.body.style.setProperty('--ui', String(clamp01((p - 0.8) / 0.2)));
+    document.body.classList.toggle('intro', p < 0.98);
+    // Kui gloobus on täielikult nähtav, annab scroller hiirelt gloobusele kontrolli
+    scroller.style.pointerEvents = p >= 0.995 ? 'none' : 'auto';
+    $('to-top').hidden = p < 0.98;
+  }
+
+  function enterHome() {
+    if (homeActive) return;
+    homeActive = true;
+    document.body.classList.add('home', 'intro');
+    hero.hidden = false;
+    scroller.hidden = false;
+    scroller.scrollTop = 0;
+    applyProgress();
+  }
+
+  function leaveHome() {
+    homeActive = false;
+    document.body.classList.remove('home', 'intro');
+    hero.hidden = true;
+    scroller.hidden = true;
+    for (const prop of ['opacity', 'transform']) { el.style[prop] = ''; hero.style[prop] = ''; }
+    document.body.style.removeProperty('--ui');
+    $('to-top').hidden = true;
+    globe.pointOfView({ altitude: FINAL_ALTITUDE }, 600);
+  }
+
+  scroller.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; applyProgress(); });
+  });
+  window.addEventListener('resize', applyProgress);
+  const toTop = () => scroller.scrollTo({ top: 0, behavior: 'smooth' });
+  $('to-top').addEventListener('click', toTop);
+  // "Avaleht" menüüs viib gloobuse juurest tagasi pealkirjani
+  document.querySelector('#nav a[data-route="avaleht"]').addEventListener('click', () => {
+    if (homeActive && routeName() === 'avaleht') toTop();
+  });
+
   async function route() {
     const name = routeName();
     const token = ++routeToken;
@@ -599,6 +672,7 @@ async function init() {
 
     const isMeist = name === 'meist';
     document.body.classList.toggle('on-meist', isMeist);
+    if (name === 'avaleht') enterHome(); else leaveHome();
     if (isMeist) {
       closeCountry(); closeFlow(); closePlace();
       globe.pauseAnimation(); // säästab arvuti jõudu, kui gloobust pole näha

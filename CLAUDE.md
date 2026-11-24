@@ -85,7 +85,16 @@ flows) ei riku lehte, vastav osa jääb tühjaks.
   `meist.html` on terve leht). Failides on eestikeelne juhend kommentaaris. Uue lehe lisamiseks:
   nav `index.html`-is + `ROUTES` app.js-is + uus fail `sisu/`.
 - [x] Jõulukujundus: tume öine taust + õrn lumesadu (`snow.js`, väljas kui "vähenda liikumist"),
-  pergamentmenüü, serif-pealkirjad (Georgia), kuldsed toonid, kuusk pealkirja kõrval.
+  pergamentmenüü, kuldsed toonid, kuusk pealkirja kõrval. Fondid Google Fontsist (vajab internetti):
+  **Fraunces** (pealkirjad) ja **Inter** (tekst); `--serif`/`--sans` style.css-is.
+  TODO: fondid ja CDN-teegid repo sisse tõsta (offline-esitluseks, vajab kasutaja luba allalaadimiseks).
+- [x] Avalehe sissejuhatus: täisekraani hero ("Jõulupuu" suure kuldse Fraunces-pealkirjaga), scrollides
+  hajub pealkiri ja gloobus ilmub sujuvalt (fade + suum, `applyProgress()` app.js-is; `#scroller`
+  on läbipaistev scrolliv kiht gloobuse peal). Kui gloobus on täielikult nähtav (p ≥ 0.995), saab
+  scroller `pointer-events: none` ja gloobus on juhitav; tagasi hero juurde nupp "↑ Algusesse" või
+  menüü "Avaleht". Teistel lehtedel (tarneahelad, Meist) hero'd pole.
+- [x] Farmid = kuusekesed, tehased = jõulumajakesed: SVG-sümbolid `#ico-tree`, `#ico-house`
+  (index.html), gloobusel HTML-markeritena (`htmlElementsData`), legendis samad ikoonid.
 - [ ] GitHub Pages avaldamine (joulupuud.ee), pildid, esitluse läbiproov
 
 ## Failid
