@@ -93,6 +93,13 @@ flows) ei riku lehte, vastav osa jääb tühjaks.
   on läbipaistev scrolliv kiht gloobuse peal). Kui gloobus on täielikult nähtav (p ≥ 0.995), saab
   scroller `pointer-events: none` ja gloobus on juhitav; tagasi hero juurde nupp "↑ Algusesse" või
   menüü "Avaleht". Teistel lehtedel (tarneahelad, Meist) hero'd pole.
+  Menüü on avalehe esimesel ekraanil peidus ja liugub scrollides ülalt sisse (`body.nav-in`, lingid
+  ilmuvad ükshaaval; CSS-i transition'id).
+- [x] Kujukeste (farm/tehas) klikitav ala on ikoonist suurem: CSS padding + `markerAt()` app.js-is
+  kontrollib klõpsu `onPolygonClick`/`onGlobeClick` sees, nii et klõps ikooni ligidal läheb alati
+  farmile/tehasele, mitte riigile.
+- [x] Meist-leht on praegu **tühi** (`sisu/meist.html` sisaldab ainult juhendi kommentaari);
+  kuni sinna tekst kirjutatakse, näidatakse ainult menüüd.
 - [x] Farmid = kuusekesed, tehased = jõulumajakesed: SVG-sümbolid `#ico-tree`, `#ico-house`
   (index.html), gloobusel HTML-markeritena (`htmlElementsData`), legendis samad ikoonid.
 - [ ] GitHub Pages avaldamine (joulupuud.ee), pildid, esitluse läbiproov

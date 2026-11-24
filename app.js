@@ -309,7 +309,14 @@ async function init() {
       el.style.cursor = f ? 'pointer' : 'grab';
       refresh();
     })
-    .onPolygonClick((f) => {
+    // Klõps farmi/tehase kujukese peale (ka selle ümbrusele) on alati tähtsam kui riigi klõps
+    .onGlobeClick((coords, ev) => {
+      const place = ev && markerAt(ev.clientX, ev.clientY);
+      if (place) openPlace(place);
+    })
+    .onPolygonClick((f, ev) => {
+      const place = ev && markerAt(ev.clientX, ev.clientY);
+      if (place) { openPlace(place); return; }
       selected = f;
       closeFlow();
       closePlace();
@@ -363,16 +370,37 @@ async function init() {
     node.setAttribute('aria-label', `${t.name}: ${d.name}`);
     node.title = `${d.name} · ${t.name}${d.volume !== null ? ' · ' + fmt(d.volume) + ' ' + (d.unit || '') : ''}`;
     node.innerHTML = `<svg viewBox="${t.view}" aria-hidden="true"><use href="#${t.icon}"/></svg>`;
+    node._place = d;
     node.addEventListener('click', (ev) => {
       ev.stopPropagation();
-      selected = null;
-      $('popup').hidden = true;
-      closeFlow();
-      selectedPlace = d;
-      refresh();
-      renderPlacePopup();
+      openPlace(d);
     });
     return node;
+  }
+
+  function openPlace(d) {
+    selected = null;
+    $('popup').hidden = true;
+    closeFlow();
+    selectedPlace = d;
+    refresh();
+    renderPlacePopup();
+  }
+
+  // Leiab nähtava kujukese, mille (ümbritsetud) kast sisaldab antud punkti. Nii on klikitav ala
+  // suurem kui ikoon ise ja klõps ei lähe kogemata riigile.
+  function markerAt(x, y) {
+    const PAD = 16;
+    let best = null;
+    let bestDist = Infinity;
+    for (const node of document.querySelectorAll('.marker')) {
+      if (node.style.opacity === '0') continue; // gloobuse taga
+      const r = node.getBoundingClientRect();
+      if (x < r.left - PAD || x > r.right + PAD || y < r.top - PAD || y > r.bottom + PAD) continue;
+      const dist = Math.hypot(x - (r.left + r.right) / 2, y - (r.top + r.bottom) / 2);
+      if (dist < bestDist) { best = node; bestDist = dist; }
+    }
+    return best ? best._place : null;
   }
 
   // Gloobuse pind tumesinine
@@ -621,6 +649,7 @@ async function init() {
 
     document.body.style.setProperty('--ui', String(clamp01((p - 0.8) / 0.2)));
     document.body.classList.toggle('intro', p < 0.98);
+    document.body.classList.toggle('nav-in', p > 0.12); // menüü ilmub, kui hakatakse alla scrollima
     // Kui gloobus on täielikult nähtav, annab scroller hiirelt gloobusele kontrolli
     scroller.style.pointerEvents = p >= 0.995 ? 'none' : 'auto';
     $('to-top').hidden = p < 0.98;
@@ -638,7 +667,7 @@ async function init() {
 
   function leaveHome() {
     homeActive = false;
-    document.body.classList.remove('home', 'intro');
+    document.body.classList.remove('home', 'intro', 'nav-in');
     hero.hidden = true;
     scroller.hidden = true;
     for (const prop of ['opacity', 'transform']) { el.style[prop] = ''; hero.style[prop] = ''; }
@@ -676,10 +705,8 @@ async function init() {
     if (isMeist) {
       closeCountry(); closeFlow(); closePlace();
       globe.pauseAnimation(); // säästab arvuti jõudu, kui gloobust pole näha
-      let content;
-      if (frag) content = frag.cloneNode(true);
-      else { content = document.createElement('p'); content.textContent = 'Sisu puudub.'; }
-      $('meist-content').replaceChildren(content);
+      // Tühi sisu = tühi leht (kaart peidetakse CSS-iga)
+      $('meist-content').replaceChildren(...(frag ? [frag.cloneNode(true)] : []));
       $('page-meist').hidden = false;
       $('page-meist').scrollTop = 0;
       $('info-card').hidden = true;
