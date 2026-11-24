@@ -1,23 +1,23 @@
-iso3,country_et,year,is_forecast,live_trees,artificial_trees,main_species,top_fact,image_url,source,team
-EST,Eesti,2025,false,250000,180000,Nordmanni nulg,Eestis müüakse jõulude eel ligi pool puid kodumaistelt kasvatajatelt.,,TESTANDMED,Tiim Eesti
-EST,Eesti,2026,true,263000,189000,Nordmanni nulg,Eestis müüakse jõulude eel ligi pool puid kodumaistelt kasvatajatelt.,,TESTANDMED,Tiim Eesti
-DEU,Saksamaa,2025,false,29000000,4000000,Nordmanni nulg,Saksamaal on jõulupuu traditsiooni juured 16. sajandis.,,TESTANDMED,Tiim Saksamaa
-DEU,Saksamaa,2026,true,28420000,3920000,Nordmanni nulg,Saksamaal on jõulupuu traditsiooni juured 16. sajandis.,,TESTANDMED,Tiim Saksamaa
-DNK,Taani,2025,false,10000000,500000,Nordmanni nulg,Taani on Euroopa suurim nulupuude eksportija.,,TESTANDMED,Tiim Taani
-DNK,Taani,2026,true,10200000,510000,Nordmanni nulg,Taani on Euroopa suurim nulupuude eksportija.,,TESTANDMED,Tiim Taani
-USA,Ameerika Ühendriigid,2025,false,25000000,60000000,Fraseri nulg,Enamik USA kunstpuid pärineb Hiinast.,,TESTANDMED,Tiim USA
-USA,Ameerika Ühendriigid,2026,true,25750000,61800000,Fraseri nulg,Enamik USA kunstpuid pärineb Hiinast.,,TESTANDMED,Tiim USA
-CHN,Hiina,2025,false,500000,200000000,,Hiina toodab suurema osa maailma kunstjõulupuudest.,,TESTANDMED,Tiim Hiina
-CHN,Hiina,2026,true,520000,208000000,,Hiina toodab suurema osa maailma kunstjõulupuudest.,,TESTANDMED,Tiim Hiina
-CAN,Kanada,2025,false,2500000,3000000,Balsaminulg,Kanada ekspordib elusaid puid peamiselt USA-sse.,,TESTANDMED,Tiim Kanada
-CAN,Kanada,2026,true,2525000,3030000,Balsaminulg,Kanada ekspordib elusaid puid peamiselt USA-sse.,,TESTANDMED,Tiim Kanada
-BRA,Brasiilia,2025,false,300000,5000000,Kunstmännid,,,TESTANDMED,Tiim Brasiilia
-BRA,Brasiilia,2026,true,324000,5400000,Kunstmännid,,,TESTANDMED,Tiim Brasiilia
-AUS,Austraalia,2025,false,600000,3500000,Monterey mänd,Austraalias tähistatakse jõule keset suve.,,TESTANDMED,Tiim Austraalia
-AUS,Austraalia,2026,true,636000,,Monterey mänd,Austraalias tähistatakse jõule keset suve.,,TESTANDMED,Tiim Austraalia
-FRA,Prantsusmaa,2025,false,6000000,3000000,Nordmanni nulg,Prantsusmaal kasvab jõulupuid eriti Morvani mägedes.,,TESTANDMED,Tiim Prantsusmaa
-FRA,Prantsusmaa,2026,true,5940000,2970000,Nordmanni nulg,Prantsusmaal kasvab jõulupuid eriti Morvani mägedes.,,TESTANDMED,Tiim Prantsusmaa
-NOR,Norra,2025,false,1200000,400000,Harilik kuusk,Norra saadab igal aastal jõulupuu Londoni Trafalgari väljakule.,,TESTANDMED,Tiim Norra
-NOR,Norra,2026,true,1236000,412000,Harilik kuusk,Norra saadab igal aastal jõulupuu Londoni Trafalgari väljakule.,,TESTANDMED,Tiim Norra
-POL,Poola,2025,false,4500000,1500000,Harilik kuusk,Poolas on kuusk püha-ajal kodu keskne element.,,TESTANDMED,Tiim Poola
-POL,Poola,2026,true,4590000,1530000,Harilik kuusk,Poolas on kuusk püha-ajal kodu keskne element.,,TESTANDMED,Tiim Poola
+iso3,country_et,year,is_forecast,live_trees,artificial_trees,main_species,live_growing_process,live_trend,artificial_production,artificial_material,artificial_footprint,artificial_disposal,top_fact,image_url,source,team
+EST,Eesti,2025,false,250000,180000,Nordmanni nulg,"Kasvab 8–10 aastat, kasvatatakse nii istandustes kui metsa all.",Nõudlus kasvab aeglaselt.,,,,Kunstpuud viiakse enamasti prügilasse.,Eestis müüakse jõulude eel ligi pool puid kodumaistelt kasvatajatelt.,,TESTANDMED,Tiim Eesti
+EST,Eesti,2026,true,263000,189000,Nordmanni nulg,"Kasvab 8–10 aastat, kasvatatakse nii istandustes kui metsa all.",Nõudlus kasvab aeglaselt.,,,,Kunstpuud viiakse enamasti prügilasse.,Eestis müüakse jõulude eel ligi pool puid kodumaistelt kasvatajatelt.,,TESTANDMED,Tiim Eesti
+DEU,Saksamaa,2025,false,29000000,4000000,Nordmanni nulg,Nordmanni nulg kasvab müügikõlblikuks 8–12 aastat.,Elusate puude osa püsib stabiilsena.,500000,PVC,Kunstpuu jalajälg võrdub ca 10 aastaga elusate puudega.,Põletatakse jäätmejaamas.,Saksamaal on jõulupuu traditsiooni juured 16. sajandis.,,TESTANDMED,Tiim Euroopa I
+DEU,Saksamaa,2026,true,28420000,3920000,Nordmanni nulg,Nordmanni nulg kasvab müügikõlblikuks 8–12 aastat.,Elusate puude osa püsib stabiilsena.,490000,PVC,Kunstpuu jalajälg võrdub ca 10 aastaga elusate puudega.,Põletatakse jäätmejaamas.,Saksamaal on jõulupuu traditsiooni juured 16. sajandis.,,TESTANDMED,Tiim Euroopa I
+DNK,Taani,2025,false,10000000,500000,Nordmanni nulg,"Seemnetest istik 2–3 aastat, siis istandus kuni 10 aastat.",Eksport kasvab.,,,,,Taani on Euroopa suurim nulupuude eksportija.,,TESTANDMED,Tiim Euroopa I
+DNK,Taani,2026,true,10200000,510000,Nordmanni nulg,"Seemnetest istik 2–3 aastat, siis istandus kuni 10 aastat.",Eksport kasvab.,,,,,Taani on Euroopa suurim nulupuude eksportija.,,TESTANDMED,Tiim Euroopa I
+USA,Ameerika Ühendriigid,2025,false,25000000,60000000,Fraseri nulg,"Istandused Põhja-Carolinas ja Oregonis, 7–10 aastat.",Kunstpuude müük kasvab kiiremini kui elusate.,2000000,"PVC, teras",Hinnanguliselt 40 kg CO2 ühe kunstpuu kohta.,Enamasti prügila.,Enamik USA kunstpuid pärineb Hiinast.,,TESTANDMED,Tiim USA
+USA,Ameerika Ühendriigid,2026,true,25750000,61800000,Fraseri nulg,"Istandused Põhja-Carolinas ja Oregonis, 7–10 aastat.",Kunstpuude müük kasvab kiiremini kui elusate.,2060000,"PVC, teras",Hinnanguliselt 40 kg CO2 ühe kunstpuu kohta.,Enamasti prügila.,Enamik USA kunstpuid pärineb Hiinast.,,TESTANDMED,Tiim USA
+CHN,Hiina,2025,false,500000,200000000,,,Tootmine on koondunud Yiwu piirkonda.,180000000,"PVC, PE, teras",Tehastes kulub palju energiat PVC valmistamisele.,,Hiina toodab suurema osa maailma kunstjõulupuudest.,,TESTANDMED,Tiim Aasia
+CHN,Hiina,2026,true,520000,208000000,,,Tootmine on koondunud Yiwu piirkonda.,187200000,"PVC, PE, teras",Tehastes kulub palju energiat PVC valmistamisele.,,Hiina toodab suurema osa maailma kunstjõulupuudest.,,TESTANDMED,Tiim Aasia
+CAN,Kanada,2025,false,2500000,3000000,Balsaminulg,Kasvab Quebecis ja Nova Scotias 8–12 aastat.,Eksport USA-sse on stabiilne.,,,,Elusaid puid komposteeritakse.,Kanada ekspordib elusaid puid peamiselt USA-sse.,,TESTANDMED,Tiim Kanada + Mehhiko
+CAN,Kanada,2026,true,2525000,3030000,Balsaminulg,Kasvab Quebecis ja Nova Scotias 8–12 aastat.,Eksport USA-sse on stabiilne.,,,,Elusaid puid komposteeritakse.,Kanada ekspordib elusaid puid peamiselt USA-sse.,,TESTANDMED,Tiim Kanada + Mehhiko
+BRA,Brasiilia,2025,false,300000,5000000,Kunstmännid,,,,,,,,,TESTANDMED,Tiim Lõuna-Ameerika + Kariibid
+BRA,Brasiilia,2026,true,324000,5400000,Kunstmännid,,,,,,,,,TESTANDMED,Tiim Lõuna-Ameerika + Kariibid
+AUS,Austraalia,2025,false,600000,3500000,Monterey mänd,Kasvab viljakates piirkondades 6–8 aastat.,Nõudlus kasvab kuumade suvede tõttu aeglaselt.,,,,Elusaid puid kasutatakse multšina.,Austraalias tähistatakse jõule keset suve.,,TESTANDMED,Tiim Austraalia + Okeaania
+AUS,Austraalia,2026,true,636000,,Monterey mänd,Kasvab viljakates piirkondades 6–8 aastat.,Nõudlus kasvab kuumade suvede tõttu aeglaselt.,,,,Elusaid puid kasutatakse multšina.,Austraalias tähistatakse jõule keset suve.,,TESTANDMED,Tiim Austraalia + Okeaania
+FRA,Prantsusmaa,2025,false,6000000,3000000,Nordmanni nulg,Peamine kasvuala on Morvani mäed.,,,,,,Prantsusmaal kasvab jõulupuid eriti Morvani mägedes.,,TESTANDMED,Tiim Euroopa II
+FRA,Prantsusmaa,2026,true,5940000,2970000,Nordmanni nulg,Peamine kasvuala on Morvani mäed.,,,,,,Prantsusmaal kasvab jõulupuid eriti Morvani mägedes.,,TESTANDMED,Tiim Euroopa II
+NOR,Norra,2025,false,1200000,400000,Harilik kuusk,"Kasvab looduslikult metsas, kasvuaeg 10–15 aastat.",,,,,,Norra saadab igal aastal jõulupuu Londoni Trafalgari väljakule.,,TESTANDMED,Tiim Euroopa II
+NOR,Norra,2026,true,1236000,412000,Harilik kuusk,"Kasvab looduslikult metsas, kasvuaeg 10–15 aastat.",,,,,,Norra saadab igal aastal jõulupuu Londoni Trafalgari väljakule.,,TESTANDMED,Tiim Euroopa II
+POL,Poola,2025,false,4500000,1500000,Harilik kuusk,,Kodumaine tootmine kasvab.,300000,PVC,,,Poolas on kuusk püha-ajal kodu keskne element.,,TESTANDMED,Tiim Euroopa I
+POL,Poola,2026,true,4590000,1530000,Harilik kuusk,,Kodumaine tootmine kasvab.,306000,PVC,,,Poolas on kuusk püha-ajal kodu keskne element.,,TESTANDMED,Tiim Euroopa I

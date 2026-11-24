@@ -22,14 +22,35 @@ Päris andmed tulevad tiimidelt hiljem, praegu on kõik testandmed (`source` = "
 ## Andmed (kaust data/)
 Andmeid **ei kirjutata kunagi koodi sisse**, kõik loetakse CSV-dest. Põhjalik seletus: `data/SCHEMA.md`.
 
+Kood loeb veerge **nime järgi** (mitte järjekorra), uued veerud ei riku vana koodi.
+
 `data/countries.csv` – üks rida = üks riik ühel aastal:
-`iso3, country_et, year, is_forecast, live_trees, artificial_trees, main_species, top_fact, image_url, source, team`
+`iso3, country_et, year, is_forecast, live_trees, artificial_trees, main_species, live_growing_process, live_trend, artificial_production, artificial_material, artificial_footprint, artificial_disposal, top_fact, image_url, source, team`
 
 `data/flows.csv` – üks rida = üks vool riigist riiki:
-`from_iso3, to_iso3, year, tree_type (live/artificial), volume, unit, note, source`
+`from_iso3, to_iso3, year, tree_type (live/artificial/material), material, volume, unit (tk/tonni), note, source`
 
-Kõik väljad peale `iso3`, `year` (vooludel `from_iso3`, `to_iso3`, `year`, `tree_type`) võivad olla
-tühjad. Puuduv väärtus kuvatakse lehel kui "andmed puuduvad".
+`data/places.csv` – farmid ja tehased (punktid kaardil):
+`name, place_type (farm/factory), iso3, lat, lng, product, volume, unit, year, note, source, team`
+
+`data/facts.csv` – mitu fakti riigi kohta (pop-up ja viktoriin):
+`iso3, category (live/artificial/general), fact, image_url, image_credit, source, team`
+
+`data/riigikoodid.csv` – kõik lubatud riigikoodid (ADM0_A3) inglise nimedega, tiimidele.
+
+Kõik väljad peale kohustuslike võivad olla tühjad. Kohustuslikud: countries `iso3`, `year`;
+flows `from_iso3`, `to_iso3`, `year`, `tree_type`; places `name`, `place_type`, `iso3`, `lat`, `lng`;
+facts `iso3`, `fact`. Puuduv väärtus kuvatakse lehel kui "andmed puuduvad".
+
+**Tiimid on regioonid** (Eesti, Euroopa I/II, Lähis-Ida, Aafrika, Aasia, Austraalia + Okeaania, USA,
+Kanada + Mehhiko, Lõuna-Ameerika + Kariibid), iga tiim katab mitu riiki. Tähtaeg: tiimid koguvad
+info 1. detsembriks, esitlus 8. detsembril.
+
+Testandmete genereerija ei ole repos; kui vaja, muuda CSV-sid otse.
+
+**Kood ei kasuta veel** (andmeformaat valmis, joonistamine tegemata): `places.csv`, `facts.csv`,
+vood, uued countries-veerud (kasvatus, materjal, jalajälg, utiliseerimine). Pop-up näitab praegu
+ainult vana põhikomplekti.
 
 ## Lehe eesmärk (lõplik)
 1. 3D-gloobus, pööramine ja suumimine hiirega

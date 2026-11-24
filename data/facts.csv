@@ -1,0 +1,13 @@
+iso3,category,fact,image_url,image_credit,source,team
+EST,live,Eesti pere ostab keskmiselt ühe puu aastas.,,,TESTANDMED,Tiim Eesti
+EST,general,Tallinna vanalinna jõulupuu on traditsioon alates 1441. aastast.,,,TESTANDMED,Tiim Eesti
+DNK,live,Taani nulupuu kasvab müügiks 8–10 aastat.,,,TESTANDMED,Tiim Euroopa I
+DEU,live,Saksamaal ostetakse aastas umbes 30 miljonit elusat puud.,,,TESTANDMED,Tiim Euroopa I
+DEU,general,Esimesed kirjalikud jõulupuud pärinevad Strasbourgi lähedalt.,,,TESTANDMED,Tiim Euroopa I
+USA,artificial,Enam kui pooled USA kodudest kasutavad kunstpuud.,,,TESTANDMED,Tiim USA
+USA,general,Valge Maja jõulupuu on traditsioon alates 1889. aastast.,,,TESTANDMED,Tiim USA
+CHN,artificial,Yiwu linna nimetatakse maailma jõulukaupade pealinnaks.,,,TESTANDMED,Tiim Aasia
+CHN,artificial,Ühe kunstpuu valmistamiseks kulub mitu kilo PVC-d.,,,TESTANDMED,Tiim Aasia
+CAN,live,Kanada saadab igal aastal jõulupuu Bostoni linnale tänutäheks.,,,TESTANDMED,Tiim Kanada + Mehhiko
+AUS,general,Austraalias pannakse jõulupuu üles suvevaheajal.,,,TESTANDMED,Tiim Austraalia + Okeaania
+NOR,general,Norra kingib jõulupuu Londonile tänutäheks II maailmasõja abi eest.,,,TESTANDMED,Tiim Euroopa II

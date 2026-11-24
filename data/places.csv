@@ -1,0 +1,9 @@
+name,place_type,iso3,lat,lng,product,volume,unit,year,note,source,team
+Näidisfarm Põlvamaal,farm,EST,58.05,27.05,Harilik kuusk,20000,tk,2025,Pereettevõte,TESTANDMED,Tiim Eesti
+Näidisfarm Fynil,farm,DNK,55.35,10.4,Nordmanni nulg,900000,tk,2025,,TESTANDMED,Tiim Euroopa I
+Näidisfarm Sauerlandis,farm,DEU,51.2,8.1,Nordmanni nulg,1500000,tk,2025,,TESTANDMED,Tiim Euroopa I
+Näidisfarm Quebecis,farm,CAN,46.8,-71.2,Balsaminulg,400000,tk,2025,,TESTANDMED,Tiim Kanada + Mehhiko
+Näidisfarm Põhja-Carolinas,farm,USA,36.1,-81.6,Fraseri nulg,1200000,tk,2025,,TESTANDMED,Tiim USA
+Näidistehas Yiwus,factory,CHN,29.3,120.07,PVC kunstpuud,50000000,tk,2025,,TESTANDMED,Tiim Aasia
+Näidistehas Guangdongis,factory,CHN,23.1,113.3,PE kunstpuud,30000000,tk,2025,,TESTANDMED,Tiim Aasia
+Näidistehas Poolas,factory,POL,52.2,21,PVC kunstpuud,300000,tk,2025,,TESTANDMED,Tiim Euroopa I
