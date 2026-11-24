@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jõulupuu – maailma jõulupuude gloobus</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="globe"></div>
+
+  <header id="title">
+    <h1>Jõulupuu</h1>
+    <p>Elusate ja kunstjõulupuude teekond üle maailma</p>
+  </header>
+
+  <div id="status">Laen andmeid…</div>
+
+  <aside id="legend" hidden>
+    <div class="legend-title">Jõulupuid kokku, <span id="legend-year"></span></div>
+    <div class="legend-bar"></div>
+    <div class="legend-scale"><span id="legend-min">0</span><span id="legend-max"></span></div>
+    <div class="legend-nodata"><i></i> andmed puuduvad</div>
+    <div id="testbadge" hidden>Testandmed – väljamõeldud numbrid</div>
+  </aside>
+
+  <aside id="popup" hidden role="dialog" aria-labelledby="popup-name">
+    <button id="popup-close" aria-label="Sulge">×</button>
+    <div id="popup-image"></div>
+    <h2 id="popup-name"></h2>
+    <dl>
+      <dt>Elusad puud</dt><dd id="p-live"></dd>
+      <dt>Kunstpuud</dt><dd id="p-art"></dd>
+      <dt>Peamine sort</dt><dd id="p-species"></dd>
+    </dl>
+    <p class="fact-label">Teadsid?</p>
+    <p id="p-fact" class="fact"></p>
+    <p class="source">Allikas: <span id="p-source"></span></p>
+  </aside>
+
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

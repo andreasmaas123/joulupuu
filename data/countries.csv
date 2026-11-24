@@ -1,0 +1,23 @@
+iso3,country_et,year,is_forecast,live_trees,artificial_trees,main_species,top_fact,image_url,source,team
+EST,Eesti,2025,false,250000,180000,Nordmanni nulg,Eestis müüakse jõulude eel ligi pool puid kodumaistelt kasvatajatelt.,,TESTANDMED,Tiim Eesti
+EST,Eesti,2026,true,263000,189000,Nordmanni nulg,Eestis müüakse jõulude eel ligi pool puid kodumaistelt kasvatajatelt.,,TESTANDMED,Tiim Eesti
+DEU,Saksamaa,2025,false,29000000,4000000,Nordmanni nulg,Saksamaal on jõulupuu traditsiooni juured 16. sajandis.,,TESTANDMED,Tiim Saksamaa
+DEU,Saksamaa,2026,true,28420000,3920000,Nordmanni nulg,Saksamaal on jõulupuu traditsiooni juured 16. sajandis.,,TESTANDMED,Tiim Saksamaa
+DNK,Taani,2025,false,10000000,500000,Nordmanni nulg,Taani on Euroopa suurim nulupuude eksportija.,,TESTANDMED,Tiim Taani
+DNK,Taani,2026,true,10200000,510000,Nordmanni nulg,Taani on Euroopa suurim nulupuude eksportija.,,TESTANDMED,Tiim Taani
+USA,Ameerika Ühendriigid,2025,false,25000000,60000000,Fraseri nulg,Enamik USA kunstpuid pärineb Hiinast.,,TESTANDMED,Tiim USA
+USA,Ameerika Ühendriigid,2026,true,25750000,61800000,Fraseri nulg,Enamik USA kunstpuid pärineb Hiinast.,,TESTANDMED,Tiim USA
+CHN,Hiina,2025,false,500000,200000000,,Hiina toodab suurema osa maailma kunstjõulupuudest.,,TESTANDMED,Tiim Hiina
+CHN,Hiina,2026,true,520000,208000000,,Hiina toodab suurema osa maailma kunstjõulupuudest.,,TESTANDMED,Tiim Hiina
+CAN,Kanada,2025,false,2500000,3000000,Balsaminulg,Kanada ekspordib elusaid puid peamiselt USA-sse.,,TESTANDMED,Tiim Kanada
+CAN,Kanada,2026,true,2525000,3030000,Balsaminulg,Kanada ekspordib elusaid puid peamiselt USA-sse.,,TESTANDMED,Tiim Kanada
+BRA,Brasiilia,2025,false,300000,5000000,Kunstmännid,,,TESTANDMED,Tiim Brasiilia
+BRA,Brasiilia,2026,true,324000,5400000,Kunstmännid,,,TESTANDMED,Tiim Brasiilia
+AUS,Austraalia,2025,false,600000,3500000,Monterey mänd,Austraalias tähistatakse jõule keset suve.,,TESTANDMED,Tiim Austraalia
+AUS,Austraalia,2026,true,636000,,Monterey mänd,Austraalias tähistatakse jõule keset suve.,,TESTANDMED,Tiim Austraalia
+FRA,Prantsusmaa,2025,false,6000000,3000000,Nordmanni nulg,Prantsusmaal kasvab jõulupuid eriti Morvani mägedes.,,TESTANDMED,Tiim Prantsusmaa
+FRA,Prantsusmaa,2026,true,5940000,2970000,Nordmanni nulg,Prantsusmaal kasvab jõulupuid eriti Morvani mägedes.,,TESTANDMED,Tiim Prantsusmaa
+NOR,Norra,2025,false,1200000,400000,Harilik kuusk,Norra saadab igal aastal jõulupuu Londoni Trafalgari väljakule.,,TESTANDMED,Tiim Norra
+NOR,Norra,2026,true,1236000,412000,Harilik kuusk,Norra saadab igal aastal jõulupuu Londoni Trafalgari väljakule.,,TESTANDMED,Tiim Norra
+POL,Poola,2025,false,4500000,1500000,Harilik kuusk,Poolas on kuusk püha-ajal kodu keskne element.,,TESTANDMED,Tiim Poola
+POL,Poola,2026,true,4590000,1530000,Harilik kuusk,Poolas on kuusk püha-ajal kodu keskne element.,,TESTANDMED,Tiim Poola

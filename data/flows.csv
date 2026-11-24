@@ -1,0 +1,25 @@
+from_iso3,to_iso3,year,tree_type,volume,unit,note,source
+DNK,DEU,2025,live,3500000,tk,Peamine Taani eksporditee,TESTANDMED
+DNK,POL,2025,live,900000,tk,,TESTANDMED
+DNK,EST,2025,live,120000,tk,Nordmanni nulg,TESTANDMED
+NOR,DNK,2025,live,250000,tk,,TESTANDMED
+CAN,USA,2025,live,1800000,tk,Balsaminulg,TESTANDMED
+POL,DEU,2025,live,1200000,tk,,TESTANDMED
+DEU,EST,2025,live,60000,tk,,TESTANDMED
+CHN,USA,2025,artificial,55000000,tk,Konteinerid Los Angelese sadamasse,TESTANDMED
+CHN,DEU,2025,artificial,3500000,tk,,TESTANDMED
+CHN,AUS,2025,artificial,3200000,tk,,TESTANDMED
+CHN,BRA,2025,artificial,4800000,tk,,TESTANDMED
+CHN,EST,2025,artificial,170000,tk,Hamburgi kaudu,TESTANDMED
+DNK,DEU,2026,live,3640000,tk,Peamine Taani eksporditee,TESTANDMED
+DNK,POL,2026,live,936000,tk,,TESTANDMED
+DNK,EST,2026,live,125000,tk,Nordmanni nulg,TESTANDMED
+NOR,DNK,2026,live,260000,tk,,TESTANDMED
+CAN,USA,2026,live,1872000,tk,Balsaminulg,TESTANDMED
+POL,DEU,2026,live,1248000,tk,,TESTANDMED
+DEU,EST,2026,live,62000,tk,,TESTANDMED
+CHN,USA,2026,artificial,57200000,tk,Konteinerid Los Angelese sadamasse,TESTANDMED
+CHN,DEU,2026,artificial,3640000,tk,,TESTANDMED
+CHN,AUS,2026,artificial,3328000,tk,,TESTANDMED
+CHN,BRA,2026,artificial,4992000,tk,,TESTANDMED
+CHN,EST,2026,artificial,177000,tk,Hamburgi kaudu,TESTANDMED
