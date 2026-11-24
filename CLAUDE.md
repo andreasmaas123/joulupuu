@@ -65,7 +65,7 @@ flows) ei riku lehte, vastav osa jääb tühjaks.
 - [x] 1–3 gloobus, värvid, riigi pop-up
 - [x] 4 kaared (flows.csv; roheline = elusad, punane = kunst, kuldne = materjal; paksus = maht,
   klikitavad, vooluandmete pop-up)
-- [x] 5 ajaliugur (aastad leitakse CSV-dest ise, ▶ esitus; prognoosiaasta = `is_forecast` true:
+- [x] 5 ajaliugur (aastad leitakse CSV-dest ise, esitusnuppu pole; prognoosiaasta = `is_forecast` true:
   silt "PROGNOOS", punktiirkaared, legendis "(prognoos)")
 - [x] 6 lüliti mõlemad / elusad / kunstpuud (muudab riigivärve, legendit ja kaari; materjalivood
   kuuluvad "kunstpuude" alla; värviskaala maksimum on iga režiimi kohta kõigi aastate peale)

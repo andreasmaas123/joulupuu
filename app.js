@@ -3,7 +3,6 @@
 
 const MISSING = 'andmed puuduvad'; // tekst puuduva väärtuse jaoks
 const NO_DATA_COLOR = '#24323f';
-const PLAY_MS = 1800;              // mitu ms ühe aasta kohta esituses
 
 const ARC_COLORS = { live: '#6df08a', artificial: '#ff5a5a', material: '#f3c969' };
 const TYPE_NAMES = { live: 'Elusad puud', artificial: 'Kunstpuud', material: 'Materjal' };
@@ -565,7 +564,7 @@ async function init() {
   // --- Ajaliugur ---
   const range = $('time-range');
   range.max = years.length - 1;
-  range.addEventListener('input', () => { stopPlay(); setYear(years[Number(range.value)]); });
+  range.addEventListener('input', () => { setYear(years[Number(range.value)]); });
   $('time-ticks').replaceChildren(...years.map((y) => {
     const s = document.createElement('span');
     s.textContent = y;
@@ -573,24 +572,6 @@ async function init() {
     return s;
   }));
 
-  let timer = null;
-  function stopPlay() {
-    clearInterval(timer);
-    timer = null;
-    $('play').textContent = '▶';
-    $('play').setAttribute('aria-label', 'Esita aastad');
-  }
-  $('play').addEventListener('click', () => {
-    if (timer) { stopPlay(); return; }
-    $('play').textContent = '❚❚';
-    $('play').setAttribute('aria-label', 'Peata');
-    if (year === years[years.length - 1]) setYear(years[0]);
-    timer = setInterval(() => {
-      const i = years.indexOf(year);
-      if (i >= years.length - 1) { stopPlay(); return; }
-      setYear(years[i + 1]);
-    }, PLAY_MS);
-  });
   // Ühe aasta andmete puhul pole liugurit vaja
   $('timebar').hidden = years.length < 2;
 
