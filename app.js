@@ -2,6 +2,7 @@
 // Kõik andmed loetakse data/ kaustast, midagi pole siia sisse kirjutatud.
 
 const MISSING = 'andmed puuduvad'; // tekst puuduva väärtuse jaoks
+const ARC_DRAW_MS = 2200;        // kui kaua kestab kaarte "joonistamine"
 const NO_DATA_COLOR = '#24323f';
 
 const ARC_COLORS = { live: '#6df08a', artificial: '#ff5a5a', material: '#f3c969' };
@@ -336,7 +337,7 @@ async function init() {
     .arcDashGap((d) => (d.forecast ? 0.2 : 0))
     .arcDashAnimateTime((d) => (d.forecast ? 4000 : 0))
     .arcAltitudeAutoScale(0.45)
-    .arcsTransitionDuration(0)
+    .arcsTransitionDuration(ARC_DRAW_MS) // jooned kasvavad algusriigist sihtriiki
     .arcLabel((d) => {
       const vol = d.volume !== null ? `${fmt(d.volume)} ${esc(d.unit || '')}` : MISSING;
       return `<div class="tip"><b>${esc(nameOfIso(d.from))} → ${esc(nameOfIso(d.to))}</b><br>`

@@ -103,6 +103,9 @@ flows) ei riku lehte, vastav osa jääb tühjaks.
 - [x] Farm = kolmest kuusest koosnev metsatukk (`#ico-trees`, koosneb `#ico-tree`-dest), tehas =
   väike jõulumaja (`#ico-house`). SVG-sümbolid on index.html-is, gloobusel HTML-markeritena
   (`htmlElementsData`), legendis samad ikoonid.
+- [x] Sujuv sisenemine: kaared kasvavad/tõusevad esile globe.gl-i enda üleminekuga
+  (`ARC_DRAW_MS` app.js algul, praegu 2200 ms), kujukesed kasvavad CSS-animatsiooniga
+  (`markerIn` style.css-is).
 - [x] Klõpsamise parandus: gloobuse automaatne pöörlemine **peatub, kui hiir on kujukese 70 px
   lähedal** (`pointermove` app.js-is), muidu liikus kujuke klõpsu ajal ära. Pöörlemine peatub
   päriselt, kui kasutaja gloobust haarab. NB: vasakul üleval olev tutvustuskaart (`#info-card`)
