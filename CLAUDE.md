@@ -100,8 +100,13 @@ flows) ei riku lehte, vastav osa jääb tühjaks.
   farmile/tehasele, mitte riigile.
 - [x] Meist-leht on praegu **tühi** (`sisu/meist.html` sisaldab ainult juhendi kommentaari);
   kuni sinna tekst kirjutatakse, näidatakse ainult menüüd.
-- [x] Farmid = kuusekesed, tehased = jõulumajakesed: SVG-sümbolid `#ico-tree`, `#ico-house`
-  (index.html), gloobusel HTML-markeritena (`htmlElementsData`), legendis samad ikoonid.
+- [x] Farm = kolmest kuusest koosnev metsatukk (`#ico-trees`, koosneb `#ico-tree`-dest), tehas =
+  väike jõulumaja (`#ico-house`). SVG-sümbolid on index.html-is, gloobusel HTML-markeritena
+  (`htmlElementsData`), legendis samad ikoonid.
+- [x] Klõpsamise parandus: gloobuse automaatne pöörlemine **peatub, kui hiir on kujukese 70 px
+  lähedal** (`pointermove` app.js-is), muidu liikus kujuke klõpsu ajal ära. Pöörlemine peatub
+  päriselt, kui kasutaja gloobust haarab. NB: vasakul üleval olev tutvustuskaart (`#info-card`)
+  katab Põhja-Ameerika kujukesed, kuni selle sulged.
 - [ ] GitHub Pages avaldamine (joulupuud.ee), pildid, esitluse läbiproov
 
 ## Failid

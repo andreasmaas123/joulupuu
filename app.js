@@ -18,7 +18,7 @@ const MODE_FLOW_TYPES = {
 
 // Farmid ja tehased (places.csv). `mode` = millise lüliti valikuga need nähtavad on.
 const PLACE_TYPES = {
-  farm: { name: 'Puufarm', icon: 'ico-tree', view: '0 0 32 40', mode: 'live' },
+  farm: { name: 'Puufarm', icon: 'ico-trees', view: '0 0 56 40', mode: 'live' },
   factory: { name: 'Kunstpuutehas', icon: 'ico-house', view: '0 0 40 36', mode: 'artificial' },
 };
 // Faktide kategooriad, mida igas režiimis näidatakse (üldised faktid alati)
@@ -389,8 +389,7 @@ async function init() {
 
   // Leiab nähtava kujukese, mille (ümbritsetud) kast sisaldab antud punkti. Nii on klikitav ala
   // suurem kui ikoon ise ja klõps ei lähe kogemata riigile.
-  function markerAt(x, y) {
-    const PAD = 16;
+  function markerAt(x, y, PAD = 16) {
     let best = null;
     let bestDist = Infinity;
     for (const node of document.querySelectorAll('.marker')) {
@@ -409,10 +408,25 @@ async function init() {
   mat.emissive.set('#06143a');
   mat.shininess = 5;
 
+  let autoRotateWanted = true;
   globe.controls().autoRotate = true;
   globe.controls().autoRotateSpeed = 0.35;
-  // Pöörlemine peatub, kui kasutaja gloobust puudutab
-  globe.controls().addEventListener('start', () => { globe.controls().autoRotate = false; });
+  // Pöörlemine peatub päriselt, kui kasutaja gloobust puudutab
+  globe.controls().addEventListener('start', () => {
+    autoRotateWanted = false;
+    globe.controls().autoRotate = false;
+  });
+  // Kui hiir on farmi/tehase kujukese lähedal, peatame pöörlemise ajutiselt. Muidu liigub kujuke
+  // klõpsu ajal ära ja seda peab taga ajama.
+  let moveTick = false;
+  window.addEventListener('pointermove', (ev) => {
+    if (moveTick || !autoRotateWanted) return;
+    moveTick = true;
+    requestAnimationFrame(() => {
+      moveTick = false;
+      globe.controls().autoRotate = !markerAt(ev.clientX, ev.clientY, 70);
+    });
+  });
 
   function refresh() {
     // globe.gl uuendab värve, kui accessor'id uuesti anda

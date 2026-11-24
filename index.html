@@ -22,6 +22,12 @@
       <circle cx="12.5" cy="23" r="1.6" fill="#f2cf6b"/><circle cx="20" cy="18" r="1.6" fill="#ff6b6b"/>
       <circle cx="15.5" cy="13.5" r="1.4" fill="#ff6b6b"/><circle cx="19.5" cy="25" r="1.4" fill="#f2cf6b"/>
     </symbol>
+    <!-- Metsatukk: kolm kuuske (farmi märk) -->
+    <symbol id="ico-trees" viewBox="0 0 56 40">
+      <use href="#ico-tree" x="1" y="11" width="19" height="24"/>
+      <use href="#ico-tree" x="36" y="13" width="19" height="24"/>
+      <use href="#ico-tree" x="14" y="2" width="28" height="35"/>
+    </symbol>
     <symbol id="ico-house" viewBox="0 0 40 36">
       <rect x="29" y="5" width="5" height="10" fill="#7a3b2e"/>
       <rect x="28" y="3.5" width="7" height="2.6" rx="1" fill="#fff"/>
@@ -85,7 +91,7 @@
     <div class="legend-nodata"><i></i> andmed puuduvad</div>
     <div class="legend-arcs" hidden>
       <div data-for="live"><i class="arc live"></i> elusad puud</div>
-      <div data-for="live"><svg class="legend-icon" viewBox="0 0 32 40"><use href="#ico-tree"/></svg> puufarm</div>
+      <div data-for="live"><svg class="legend-icon trees" viewBox="0 0 56 40"><use href="#ico-trees"/></svg> puufarm</div>
       <div data-for="artificial"><i class="arc artificial"></i> kunstpuud</div>
       <div data-for="artificial"><i class="arc material"></i> materjal</div>
       <div data-for="artificial"><svg class="legend-icon house" viewBox="0 0 40 36"><use href="#ico-house"/></svg> kunstpuutehas</div>
