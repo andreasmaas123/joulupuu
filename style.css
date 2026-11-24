@@ -181,10 +181,16 @@ body::before {
 .legend-note { font-size: 0.75rem; margin-top: 2px; }
 
 /* Tüübi lüliti */
-#modebar {
+#controls {
   position: fixed;
   top: 20px;
   right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#controls[hidden], .legend-arcs[hidden] { display: none; }
+#modebar {
   display: flex;
   padding: 4px;
   gap: 2px;
@@ -193,7 +199,23 @@ body::before {
   border-radius: 999px;
   backdrop-filter: blur(6px);
 }
-#modebar[hidden] { display: none; }
+#chain-toggle {
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+#chain-toggle:hover { color: var(--text); }
+#chain-toggle[aria-pressed="true"] {
+  background: rgba(123, 216, 143, 0.22);
+  color: var(--green);
+  font-weight: 600;
+}
 #modebar button {
   padding: 7px 16px;
   border: 0;
@@ -276,8 +298,9 @@ dd.missing { color: var(--muted); font-weight: 400; font-style: italic; }
   #title h1 { font-size: 1.5rem; }
   #title p { display: none; }
   #legend { left: 12px; bottom: 12px; width: 170px; }
-  #modebar { top: auto; bottom: 12px; right: 12px; }
+  #controls { top: auto; bottom: 12px; right: 12px; flex-direction: column; align-items: flex-end; gap: 6px; }
   #modebar button { padding: 7px 10px; font-size: 0.8rem; }
+  #chain-toggle { padding: 7px 12px; font-size: 0.8rem; }
   #timebar {
     top: 56px; bottom: auto; left: 12px; right: 12px;
     transform: none; width: auto; min-width: 0;

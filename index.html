@@ -16,10 +16,13 @@
 
   <div id="status">Laen andmeid…</div>
 
-  <div id="modebar" role="group" aria-label="Puude tüüp" hidden>
-    <button type="button" data-mode="both" aria-pressed="true">Mõlemad</button>
-    <button type="button" data-mode="live" aria-pressed="false">Elusad</button>
-    <button type="button" data-mode="artificial" aria-pressed="false">Kunstpuud</button>
+  <div id="controls" hidden>
+    <button id="chain-toggle" type="button" aria-pressed="false">Näita tarneahelaid</button>
+    <div id="modebar" role="group" aria-label="Puude tüüp">
+      <button type="button" data-mode="both" aria-pressed="true">Mõlemad</button>
+      <button type="button" data-mode="live" aria-pressed="false">Elusad</button>
+      <button type="button" data-mode="artificial" aria-pressed="false">Kunstpuud</button>
+    </div>
   </div>
 
   <aside id="legend" hidden>
@@ -27,7 +30,7 @@
     <div class="legend-bar"></div>
     <div class="legend-scale"><span id="legend-min">0</span><span id="legend-max"></span></div>
     <div class="legend-nodata"><i></i> andmed puuduvad</div>
-    <div class="legend-arcs">
+    <div class="legend-arcs" hidden>
       <div><i class="arc live"></i> elusad puud</div>
       <div><i class="arc artificial"></i> kunstpuud</div>
       <div><i class="arc material"></i> materjal</div>

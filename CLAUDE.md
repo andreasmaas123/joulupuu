@@ -73,6 +73,9 @@ flows) ei riku lehte, vastav osa jääb tühjaks.
   (aasta: kuvatakse uusim rida, mis pole sellest aastast uuem)
 - [x] riigi pop-up: kasvatus, trend, tootmine, materjal, jalajälg, utiliseerimine (lõigud järgivad
   lülitit) ja mitu fakti facts.csv-st (kategooria järgi, "general" alati)
+- [x] Algvaade (juhis): ainult gloobus, kaari ja punkte pole näha. Nupp "Näita tarneahelaid"
+  (üleval paremal, `showChains` app.js-is) lülitab kaared + farmid/tehased + nende legendi sisse.
+  Riigile klikkides avanevad faktid alati.
 - [ ] GitHub Pages avaldamine (joulupuud.ee), pildid, esitluse läbiproov
 
 ## Failid

@@ -275,6 +275,7 @@ async function init() {
   // Olek
   let year = years.find((y) => !forecastYears.has(y)) ?? years[0];
   let mode = 'both';
+  let showChains = false; // algvaade: ainult gloobus, tarneahelad (kaared ja punktid) peidus
   let hovered = null;
   let selected = null;
   let selectedFlow = null;
@@ -455,7 +456,7 @@ async function init() {
 
   // Punktid valitud aasta ja lüliti järgi
   function renderPoints() {
-    const visible = placesForYear(year).filter((p) => mode === 'both' || PLACE_TYPES[p.type].mode === mode);
+    const visible = (showChains ? placesForYear(year) : []).filter((p) => mode === 'both' || PLACE_TYPES[p.type].mode === mode);
     globe.pointsData(visible);
     if (selectedPlace) {
       const s = selectedPlace;
@@ -516,7 +517,7 @@ async function init() {
   function renderArcs() {
     const forecast = forecastYears.has(year);
     const types = MODE_FLOW_TYPES[mode];
-    const arcs = (flowsByYear[year] || [])
+    const arcs = (showChains ? flowsByYear[year] || [] : [])
       .filter((f) => types.includes(f.type))
       .filter((f) => {
         const ok = centers[f.from] && centers[f.to];
@@ -559,7 +560,17 @@ async function init() {
     const b = e.target.closest('button[data-mode]');
     if (b) setMode(b.dataset.mode);
   });
-  $('modebar').hidden = false;
+  $('controls').hidden = false;
+
+  // --- Tarneahelate sisse/välja lüliti ---
+  $('chain-toggle').addEventListener('click', () => {
+    showChains = !showChains;
+    $('chain-toggle').setAttribute('aria-pressed', String(showChains));
+    $('chain-toggle').textContent = showChains ? 'Peida tarneahelad' : 'Näita tarneahelaid';
+    document.querySelector('.legend-arcs').hidden = !showChains;
+    renderArcs();
+    renderPoints();
+  });
 
   // --- Ajaliugur ---
   const range = $('time-range');
